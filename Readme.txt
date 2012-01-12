@@ -1,0 +1,1 @@
+This is a simple timesheet application based on the FLOW3 PHP Framework
