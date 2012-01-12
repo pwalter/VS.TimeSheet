@@ -29,7 +29,7 @@ class Helper {
 	protected $persistenceManager;
 
 	/**
-	 * Returns the Settings of that namespace and caches it
+	 * Returns a setting property
 	 *
 	 * @param $namespace String Namespace
 	 * @return $settings Array of settings
