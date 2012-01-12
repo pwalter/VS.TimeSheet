@@ -1,0 +1,105 @@
+<f:layout name="Master"/>
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Benutzer bearbeiten: {account.party.name.fullName}</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            [Text]
+        </div>
+        <div class="span10">
+            <f:form action="update" object="{account}" name="account" method="post">
+                <fieldset>
+                    <legend>Zur Person</legend>
+                    <div class="clearfix">
+                        <label>Vorname</label>
+                        <div class="input">
+                            <f:form.textbox class="xlarge" property="party.name.firstName" id="firstname" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Nachname</label>
+                        <div class="input">
+                            <f:form.textbox class="xlarge" property="party.name.lastName" id="lastname" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Zugangsdaten</legend>
+                    <div class="clearfix">
+                        <label>Benutzername</label>
+                        <div class="input">
+                            <f:form.textbox class="xlarge" property="accountIdentifier" id="accountIdentifier" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Passwort</label>
+                        <div class="input">
+                            <f:form.password class="xlarge" name="password" id="password" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Rolle</label>
+                        <div class="input">
+                            <f:form.select name="roles" value="{selectedRoles}" multiple="true" options="{allRoles}" id="role" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Arbeitszeiten</legend>
+                    <div class="clearfix">
+                        <label>Montag</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesMonday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Dienstag</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesTuesday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Mittwoch</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesWednesday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Donnerstag</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesThursday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Freitag</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesFriday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Samstag</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesSaturday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Sonntag</label>
+                        <div class="input">
+                            <f:form.textbox class="small" property="party.minutesSunday" /> Minuten
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="input">
+                            <input type="submit" class="btn primary" value="Speichern">
+                        </div>
+                    </div>
+                </fieldset>
+            </f:form>
+        </div>
+    </div>
+</f:section>

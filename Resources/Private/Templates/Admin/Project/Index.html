@@ -1,0 +1,58 @@
+<f:layout name="Master" />
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Projektverwaltung</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            [Text]
+        </div>
+        <div class="span10">
+            <f:link.action controller="Admin\Project" action="new"><button class="btn primary">Projekt anlegen</button></f:link.action><br />
+            <table class="condensed-table zebra-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Kunde</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{projects}" as="project">
+                    <tr>
+                        <td>{project.number}</td>
+                        <td><b>{project.name}</b></td>
+                        <td>{project.customer.name.fullName}</td>
+                        <td>
+                            <!-- Löschen Dialog -->
+                            <div id="modal-confirm-delete" class="modal hide fade">
+                                <div class="modal-header">
+                                    <a href="#" class="close">&times;</a>
+                                    <h3>Projekt '{project.name}' wirklich löschen?</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie trotzdem fortfahren?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <f:link.action class="btn primary" action="delete" arguments="{project: project}" controller="Admin\Project">
+                                        Ja, löschen
+                                    </f:link.action>
+                                </div>
+                            </div>
+
+                            <button data-controls-modal="modal-confirm-delete" data-backdrop="true" data-keyboard="true" class="btn small">Löschen</button>
+                        </td>
+                    </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</f:section>

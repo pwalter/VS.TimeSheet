@@ -1,0 +1,46 @@
+TYPO3:
+  FLOW3:
+    security:
+      authentication:
+        authenticationStrategy: oneToken
+        providers:
+          DefaultProvider:
+            providerClass: TYPO3\FLOW3\Security\Authentication\Provider\PersistedUsernamePasswordProvider
+            entryPoint:
+              WebRedirect:
+                uri: standard/index
+      authorization:
+        # An array of access decision voters that should vote when access decisions are made
+        accessDecisionVoters:
+          - TYPO3\FLOW3\Security\Authorization\Voter\Policy
+VS:
+  TimeSheet:
+    brand: TimeSheet
+    version: "1.0.1"
+    versionDate: "10. Januar 2012"
+    weekdays:
+      sunday: Sonntag
+      monday: Montag
+      tuesday: Dienstag
+      wednesday: Mittwoch
+      thursday: Donnerstag
+      friday: Freitag
+      saturday: Samstag
+    employee:
+      workingHoursMode:
+        day: 'pro Tag'
+        week: 'pro Woche'
+        month: 'pro Monat'
+        year: 'pro Jahr'
+    business:
+      hours:
+        Sunday: 0
+        Monday: 8
+        Tuesday: 8
+        Wednesday: 8
+        Thursday: 8
+        Friday: 8
+        Saturday: 0
+    formats:
+      dateTime:
+        full: 'd.m.Y'

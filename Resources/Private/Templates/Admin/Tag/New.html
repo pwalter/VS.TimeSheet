@@ -1,0 +1,30 @@
+<f:layout name="Master"/>
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Tag anlegen</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            [Text]
+        </div>
+        <div class="span10">
+            <f:form action="create" object="{tag}" name="tag" method="post">
+                <div class="clearfix">
+                    <label>Name</label>
+                    <div class="input">
+                        <f:form.textbox class="xlarge" property="name" id="name" />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="input">
+                        <input type="submit" class="btn primary" value="Speichern">
+                    </div>
+                </div>
+            </f:form>
+        </div>
+    </div>
+</f:section>

@@ -1,0 +1,36 @@
+<f:layout name="Master" />
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Tagverwaltung</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            [Text]
+        </div>
+        <div class="span10">
+            <f:link.action controller="Admin\Tag" action="new"><button class="btn primary">Tag anlegen</button></f:link.action><br />
+            <table class="condensed-table zebra-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{tags}" as="tag">
+                    <tr>
+                        <td><b>{tag.name}</b></td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</f:section>

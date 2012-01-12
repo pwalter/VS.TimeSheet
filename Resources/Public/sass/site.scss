@@ -1,0 +1,101 @@
+@import "base";
+@import "compass";
+
+html {
+    background: {
+        // Noise Image Generator: http://noisepng.com/
+        image: url(../images/noise/130-90-2.png);
+        color: #f5f4f4;
+    }
+    body {
+        background: {
+            // Noise Image Generator: http://noisepng.com/
+            image: url(../images/noise/130-90-2.png);
+            color: #f5f4f4;
+        }
+        padding-top: 40px;
+
+        .topbar-inner,
+        .topbar .fill {
+            background: {
+                image: url(../images/noise/130-90-4.png);
+                color: $color_hdh_blue;
+            }
+        }
+        /*
+        .topbar div > ul .menu-dropdown,
+        .nav .menu-dropdown,
+        .topbar div > ul .dropdown-menu,
+        .nav .dropdown-menu {
+            background: {
+                image: url(../images/noise/130-90-4.png);
+                color: $color_hdh_blue;
+            }
+        }
+
+        .topbar div > ul .menu-dropdown .divider,
+        .nav .menu-dropdown .divider,
+        .topbar div > ul .dropdown-menu .divider,
+        .nav .dropdown-menu .divider {
+            //background-color: #222;
+            //border-color: #444;
+            background: {
+                image: url(../images/noise/130-90-4.png);
+                color: $color_hdh_blue;
+            }
+            border:{
+                color: $color_hdh_blue;
+            }
+        }*/
+
+        .container {
+            width: 820px;
+
+            > .content {
+                background-color: #fff;
+                padding: 20px;
+                margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+                -webkit-border-radius: 0 0 6px 6px;
+                -moz-border-radius: 0 0 6px 6px;
+                border-radius: 0 0 6px 6px;
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+
+                .page-header {
+                    background-color: #f5f5f5;
+                    padding: 20px 20px 10px;
+                    margin: -20px -20px 20px;
+                  }
+
+                $progressbar_height: 15px;
+                $progressbar_padding: 1px;
+                .progressbar {
+                    border:1px solid #DDD;
+                    background-color:white;
+                    height:$progressbar_height;
+                    padding:$progressbar_padding;
+                    z-index: 99;
+
+                    > div.bar {
+                        height: 100%;
+                    }
+
+                    > div.text {
+                        height: 100%;
+                        width: 100%;
+                        text-align: center;
+                        position: relative;
+                        top: ($progressbar_height + (2*$progressbar_padding)) * -1;
+                        //.text-shadow(white, 0px, 1px, 1px);
+                        @include text-shadow(white 0px 1px 2px, white 0px -1px 2px, white -1px 0px 2px, white 2px 0px 2px);
+                    }
+                }
+            }
+
+            > footer p {
+                text-align: center;
+            }
+        }
+    }
+}

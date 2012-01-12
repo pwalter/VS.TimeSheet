@@ -1,0 +1,60 @@
+<f:layout name="Master" />
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Kategorien</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            Dies sind die Kategorien, welche für eine einfache Einordnung der Tätigkeit eingesetzt werden.
+        </div>
+        <div class="span10">
+            <f:link.action controller="Manage" action="newCategory"><button class="btn primary">Kategorie anlegen</button></f:link.action><br />
+            <table class="zebra-striped">
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Übergeordnete Kategorie</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{categories}" as="category">
+                    <tr>
+                        <td><b>{category.title}</b></td>
+                        <td>{category.parent.title}</td>
+                        <td>
+                            <f:link.action action="editCategory" arguments="{category: category}" controller="Manage">
+                                <button class="btn small">Bearbeiten</button>
+                            </f:link.action>
+
+                            <!-- Löschen Dialog -->
+                            <div id="modal-from-dom" class="modal hide fade">
+                                <div class="modal-header">
+                                    <a href="#" class="close">&times;</a>
+                                    <h3>Kategorie '{category.title}' wirklich löschen?</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie trotzdem fortfahren?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <f:link.action class="btn primary" action="deleteCategory" arguments="{category: category}" controller="Manage">
+                                        Ja, löschen
+                                    </f:link.action>
+                                </div>
+                            </div>
+
+                            <button data-controls-modal="modal-from-dom" data-backdrop="ghjk" data-keyboard="true" class="btn small">Löschen</button>
+                        </td>
+                    </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</f:section>

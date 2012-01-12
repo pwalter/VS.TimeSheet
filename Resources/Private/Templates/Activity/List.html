@@ -1,0 +1,181 @@
+<f:layout name="Master" />
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Ihr Zeitkonto</h1>
+</f:section>
+
+<f:section name="content">
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("span[rel=popover]")
+                .popover({
+                  offset: 10
+                })
+                .click(function(e) {
+                  e.preventDefault()
+                })
+        });
+
+    </script>
+    <div class="row">
+        <div class="span4">
+            <h3>Auswahl</h3>
+
+            <table class="condensed-table">
+                <tbody>
+                    <tr>
+                        <td>Zeitraum von:</td>
+                        <td>{dateFrom}</td>
+                    </tr>
+                    <tr>
+                        <td>Zeitraum bis:</td>
+                        <td>{dateTo}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="pull-right">
+                <a href="#" data-controls-modal="modal-filter" data-backdrop="true" data-keyboard="true">Auswahl ändern</a>
+            </span>
+            <f:render partial="Activity/ListFilterDialog" arguments="{filter: filter}"/>
+            <br />
+            <h3>Statistik</h3>
+            <table class="condensed-table">
+                <tbody>
+                    <tr>
+                        <td>Wochentage:</td>
+                        <td>{weekdays}</td>
+                    </tr>
+                    <tr>
+                        <td>Arbeitszeit (IST):</td>
+                        <td><ts:format.timespan format="h m">{istMinutes}</ts:format.timespan></td>
+                    </tr>
+                    <tr>
+                        <td>Arbeitszeit (SOLL):</td>
+                        <td><ts:format.timespan format="h m">{sollMinutes}</ts:format.timespan></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="progressbar">
+                            <f:if condition="{percentageMinutes} > 100">
+                                <f:then>
+                                    <div class="bar" style="width: 100%; background-color: red;"></div>
+                                </f:then>
+                                <f:else>
+                                    <div class="bar"style="width: {percentageMinutes}%; background-color: green;"></div>
+                                </f:else>
+                            </f:if>
+                            <div class="text">
+                                {percentageMinutes}%
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span10">
+            <h3>Tätigkeiten</h3>
+            <table class="condensed-table zebra-striped">
+                <thead>
+                    <tr>
+                        <th>Dauer (hh:mm)</th>
+                        <th>Datum</th>
+                        <th>Projekt</th>
+                        <th>Aufgabe</th>
+                        <th>Kommentar</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{activities}" as="activity">
+                    <tr>
+                        <td><!--<ts:identity>{activity}</ts:identity>--><ts:format.timespan>{activity.minutes}</ts:format.timespan></td>
+                        <td><f:format.date format="d.m.Y">{activity.date}</f:format.date></td>
+                        <td>
+                            <f:if condition="{activity.project.code}">
+                                <f:then>
+                                    <span class="label notice" rel="popover" data-content="Kunde: {activity.project.customer.name.fullName} ({activity.project.customer.code})" data-original-title="{activity.project.name} ({activity.project.code})">{activity.project.code}</span>
+                                </f:then>
+                                <f:else>
+                                    <span class="label notice" rel="popover" data-content="Kunde: {activity.project.customer.name.fullName} ({activity.project.customer.code})" data-original-title="{activity.project.name}">[Details]</span>
+                                </f:else>
+                            </f:if>
+                        </td>
+                        <td>{activity.task.name}</td>
+                        <td>
+                            <f:if condition="{activity.comment}">
+                                <f:then>
+                                    <span class="label success" rel="popover" data-content="{activity.comment}" data-original-title="Kommentar">Ja</span>
+                                </f:then>
+                                <f:else>
+                                    <span class="label">Nein</span>
+                                </f:else>
+                            </f:if>
+                        </td>
+                        <td>
+                            <!--
+                            <div id="modal-details-{activity.identifier}" class="modal hide fade">
+                                <div class="modal-header">
+                                    <a href="#" class="close">&times;</a>
+                                    <h3>Details der Zeiterfassung</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <div class="row">
+                                            <div class="span2">
+                                                <strong>Mitarbeiter:</strong>
+                                            </div>
+                                            <div class="span4">
+                                                {activity.account.party.name.fullName}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="span2">
+                                                <strong>Datum:</strong>
+                                            </div>
+                                            <div class="span4">
+                                                <f:format.date format="d.m.Y">{activity.date}</f:format.date>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="span2">
+                                                <strong>Dauer:</strong>
+                                            </div>
+                                            <div class="span4">
+                                                <ts:format.timespan>{activity.minutes}</ts:format.timespan>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="span2">
+                                                <strong>Kategorie:</strong>
+                                            </div>
+                                            <div class="span4">
+                                                {activity.category.title}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="span2">
+                                                <strong>Kommentar:</strong>
+                                            </div>
+                                            <div class="span4">
+                                                {activity.comment}
+                                            </div>
+                                        </div>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn primary click">Schließen</button>
+                                </div>
+                            </div>
+
+                            <button data-controls-modal="modal-details-{activity.identifier}" data-backdrop="ghjk" data-keyboard="true" class="btn small">Details</button>
+                        -->
+                        </td>
+                    </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</f:section>

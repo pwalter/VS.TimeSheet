@@ -1,0 +1,25 @@
+#                                                                        #
+# Security policy definition                                             #
+#                                                                        #
+# This file contains the security policy configuration for the           #
+# Blog package                                                           #
+
+# @version $Id: Policy.yaml 3886 2010-02-28 17:03:50Z robert $
+
+#resources:
+#  methods:
+#    VS_TimeSheet_Controller_AdminControllers: 'class(VS\TimeSheet\Controller\ManageController)'
+#    VS_TimeSheet_Controller_EmployeeControllers: 'class(VS\TimeSheet\Controller\ActivityController)'
+#    VS_TimeSheet_Controller_AccountControllerMethods: 'method(VS\TimeSheet\Controller\AccountController->.*profileAction())'
+roles:
+  Employee: []
+  Management: [Employee]
+  Administrator: [Management]
+#acls:
+#  Administrator:
+#    methods:
+#      VS_TimeSheet_Controller_AdminControllers: GRANT
+#      VS_TimeSheet_Controller_AccountControllerMethods: GRANT
+#  Employee:
+#    methods:
+#      VS_TimeSheet_Controller_EmployeeControllers: GRANT

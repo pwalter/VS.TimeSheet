@@ -1,0 +1,101 @@
+#-
+#  name: 'Generic Json Service'
+#  uriPattern: 'fghj/{@controller}(/{@action}).json'
+#  defaults:
+#    '@package':    'VS.TimeSheet'
+#    '@controller': 'Standard'
+#    '@action':     'index'
+#    '@format':     'json'
+
+#-
+#  name: 'Generic'
+#  uriPattern: '{@controller}/{@action}(.{@format})'
+#  defaults:
+#    '@package':    'VS.TimeSheet'
+#    '@controller': 'Standard'
+#    '@action':     'index'
+#    '@format':     'html'
+
+#
+-
+  name: 'Admin Account'
+  uriPattern: 'admin/account(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Admin\Account'
+    '@action':     'index'
+    '@format':     'html'
+
+-
+  name: 'Admin Tag'
+  uriPattern: 'admin/tag(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Admin\Tag'
+    '@action':     'index'
+    '@format':     'html'
+
+-
+  name: 'Admin Customer'
+  uriPattern: 'admin/customer(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Admin\Customer'
+    '@action':     'index'
+    '@format':     'html'
+
+-
+  name: 'Admin Project'
+  uriPattern: 'admin/project(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Admin\Project'
+    '@action':     'index'
+    '@format':     'html'
+
+-
+  name: 'Admin Task'
+  uriPattern: 'admin/task(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Admin\Task'
+    '@action':     'index'
+    '@format':     'html'
+
+#-
+#  name: 'Generic Admin Routes 2'
+#  uriPattern: 'admin/{@controller}(/{@action})'
+#  defaults:
+#    '@package':    'VS.TimeSheet'
+#    '@subpackage': 'Admin'
+#    '@controller': 'Standard'
+#    '@action':     'index'
+#    '@format':     'html'
+#
+-
+  name: 'Generic'
+  uriPattern: '{@controller}(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Standard'
+    '@action':     'index'
+    '@format':     'html'
+
+-
+  name: 'Generic JSON Routes'
+  uriPattern: 'json/{@controller}(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@subpackage': 'Json'
+    '@controller': 'Standard'
+    '@action':     'index'
+    '@format':     'json'
+
+-
+  name: 'Index'
+  uriPattern: ''
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Standard'
+    '@action':     'index'
+    '@format':     'html'
