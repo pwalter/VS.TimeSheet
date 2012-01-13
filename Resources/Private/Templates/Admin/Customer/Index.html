@@ -27,10 +27,15 @@
                     <tr>
                         <td>{customer.number}</td>
                         <td><b>{customer.name.fullName}</b></td>
-                        <td>???</td>
+                        <td>
+                            <ts:join collection="{customer.projects}" property="code" />
+                        </td>
                         <td>
                             <f:link.action action="new" arguments="{customer: customer}" controller="Admin\Project">
                                 <button class="btn small">Neues Projekt</button>
+                            </f:link.action>
+                            <f:link.action class="btn small" action="index" arguments="{customer: customer}" controller="Admin\Task">
+                                Aufgaben
                             </f:link.action>
                         </td>
                     </tr>

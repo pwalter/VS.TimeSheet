@@ -62,10 +62,18 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
             $account->setCredentialsSource($this->hashService->hashPassword($password));
         }
 
-        $this->accountRepository->update($account);
-        $this->employeeRepository->update($account->getParty());
-        $this->addFlashMessage('Sie haben Ihr Profil erfolgreich bearbeitet!');
-        $this->redirect('index', 'Standard');
+        //\TYPO3\FLOW3\var_dump($account);
+
+        try {
+            $this->accountRepository->update($account);
+            $this->employeeRepository->update($account->getParty());
+            $this->addFlashMessage('Sie haben Ihr Profil erfolgreich bearbeitet!');
+            $this->redirect('index', 'Standard');
+        } catch (Exception $e) {
+            $this->addFlashMessageError($e->getMessage());
+            return;
+        }
+
     }
 
 

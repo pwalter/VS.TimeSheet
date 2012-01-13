@@ -16,8 +16,8 @@ TYPO3:
 VS:
   TimeSheet:
     brand: TimeSheet
-    version: "1.0.1"
-    versionDate: "10. Januar 2012"
+    version: "1.0.2"
+    versionDate: "15. Januar 2012"
     weekdays:
       sunday: Sonntag
       monday: Montag
@@ -26,21 +26,6 @@ VS:
       thursday: Donnerstag
       friday: Freitag
       saturday: Samstag
-    employee:
-      workingHoursMode:
-        day: 'pro Tag'
-        week: 'pro Woche'
-        month: 'pro Monat'
-        year: 'pro Jahr'
-    business:
-      hours:
-        Sunday: 0
-        Monday: 8
-        Tuesday: 8
-        Wednesday: 8
-        Thursday: 8
-        Friday: 8
-        Saturday: 0
     formats:
       dateTime:
         full: 'd.m.Y'

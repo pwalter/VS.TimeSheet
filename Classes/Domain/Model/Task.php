@@ -57,7 +57,7 @@ class Task {
 		$this->activities = new \Doctrine\Common\Collections\ArrayCollection();
 
         $this->name = $name;
-        $this->code = 'T01';
+        $this->code = '';
         $this->comment = '';
 
         $this->active = TRUE;

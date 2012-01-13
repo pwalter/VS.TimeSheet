@@ -16,12 +16,6 @@
                 <fieldset>
                     <legend>Aufgabendaten</legend>
                     <div class="clearfix">
-                        <label>Nummer</label>
-                        <div class="input">
-                            <f:form.textbox class="xlarge" property="number" id="number" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
                         <label>Name</label>
                         <div class="input">
                             <f:form.textbox class="xlarge" property="name" id="name" />
@@ -34,12 +28,63 @@
                         </div>
                     </div>
                     <div class="clearfix">
+                        <label>Kommentar</label>
+                        <div class="input">
+                            <f:form.textarea class="xlarge" rows="5" cols="200" property="comment" id="comment" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Zuordnung</legend>
+                    <div class="clearfix">
+                        <label for="customer">Kunde</label>
+                        <div class="input">
+                            <f:form.select class="span6" options="{customers}" name="customer" optionLabelField="name.fullName" id="customer" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="project">Projekt</label>
+                        <div class="input">
+                            <f:form.select class="span6" property="project" options="{projects}" name="project" optionLabelField="name" id="project" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
                         <div class="input">
                             <input type="submit" class="btn primary" value="Speichern">
                         </div>
                     </div>
                 </fieldset>
             </f:form>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("select#customer").change(function(){
+                        $("select#customer").attr('disabled', 'disabled');
+                        $("select#project").attr('disabled', 'disabled');
+                        $.ajax({
+                            type: 'POST',
+                            url: '<f:uri.action action="customerSelected" controller="AdminTask" subpackage="Json" />',
+                            data: {
+                                customer: $("select#customer").val()
+                            },
+                            success: function(data) {
+                                // Set Projects
+                                var optionsProjects = '';
+                                for (var i = 0; i < data.projects.length; i++) {
+                                    optionsProjects += '<option value="' + data.projects[i].value + '">' + data.projects[i].text + '</option>';
+                                }
+                                $("select#project").html(optionsProjects);
+                                $('select#project option:first').attr('selected', 'selected');
+
+                                $("select#project").trigger( "change" );
+                                $("select#project").removeAttr('disabled');
+
+                                // Customer
+                                $("select#customer").removeAttr('disabled');
+                            }
+                        });
+                    });
+                });
+            </script>
         </div>
     </div>
 </f:section>

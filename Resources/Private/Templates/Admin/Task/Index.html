@@ -9,25 +9,71 @@
 <f:section name="content">
     <div class="row">
         <div class="span4">
-            [Text]
+            <h3>Auswahl</h3>
+            <table class="condensed-table">
+                <tbody>
+                    <tr>
+                        <td>Kunde:</td>
+                        <td>
+                            <f:if condition="{customer}">
+                                <f:then>
+                                    {customer.name.fullName}
+                                </f:then>
+                                <f:else>
+                                    <i>keine Einschränkung</i>
+                                </f:else>
+                            </f:if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Projekt:</td>
+                        <td>
+                            <f:if condition="{project}">
+                                <f:then>
+                                    <f:if condition="{project.code}">
+                                        <f:then>
+                                            <span class="label notice" rel="popover" data-content="Kunde: {project.customer.name.fullName} ({project.customer.code})" data-original-title="{project.name} ({project.code})">{project.code}</span>
+                                        </f:then>
+                                        <f:else>
+                                            <span class="label notice" rel="popover" data-content="Kunde: {project.customer.name.fullName} ({project.customer.code})" data-original-title="{project.name}">[Details]</span>
+                                        </f:else>
+                                    </f:if>
+                                </f:then>
+                                <f:else>
+                                    <i>keine Einschränkung</i>
+                                </f:else>
+                            </f:if>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="span10">
-            <f:link.action controller="Admin\Task" action="new"><button class="btn primary">Ausgabe anlegen</button></f:link.action><br />
+            <f:link.action controller="Admin\Task" action="new" arguments="{project: project}"><button class="btn primary">Aufgabe anlegen</button></f:link.action><br />
             <table class="condensed-table zebra-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Code</th>
                         <th>Name</th>
+                        <th>Projekt</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <f:for each="{tasks}" as="task">
                     <tr>
-                        <td>{task.number}</td>
                         <td>{task.code}</td>
                         <td><b>{task.name}</b></td>
+                        <td>
+                            <f:if condition="{task.project.code}">
+                                <f:then>
+                                    <span class="label notice" rel="popover" data-content="Kunde: {task.project.customer.name.fullName} ({task.project.customer.code})" data-original-title="{task.project.name} ({task.project.code})">{task.project.code}</span>
+                                </f:then>
+                                <f:else>
+                                    <span class="label notice" rel="popover" data-content="Kunde: {task.project.customer.name.fullName} ({task.project.customer.code})" data-original-title="{task.project.name}">[Details]</span>
+                                </f:else>
+                            </f:if>
+                        </td>
                         <td>
                             
                         </td>
@@ -35,6 +81,18 @@
                     </f:for>
                 </tbody>
             </table>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("span[rel=popover]")
+                        .popover({
+                          offset: 10
+                        })
+                        .click(function(e) {
+                          e.preventDefault()
+                        })
+                });
+
+            </script>
         </div>
     </div>
 </f:section>

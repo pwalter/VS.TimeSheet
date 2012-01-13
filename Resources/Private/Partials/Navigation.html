@@ -3,6 +3,7 @@
 <f:security.ifAuthenticated>
 <f:then>
 <ul class="nav">
+    <li><f:link.action controller="Standard">Erfassen</f:link.action></li>
     <li class_="active"><f:link.action controller="Activity" action="list">Zeitkonto</f:link.action></li>
     <f:security.ifHasRole role="Administrator">
     <li class="dropdown">

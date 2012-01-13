@@ -35,4 +35,19 @@ class TaskRepository extends \TYPO3\FLOW3\Persistence\Repository {
         )
         ->execute();
     }
+
+    /**
+     * @param \VS\TimeSheet\Domain\Model\Customer $customer
+     * @return \TYPO3\FLOW3\Persistence\QueryResultInterface
+     */
+    public function findAllByCustomer(\VS\TimeSheet\Domain\Model\Customer $customer) {
+            $query = $this->createQuery();
+            return $query->matching(
+                $query->equals('project.customer', $customer)
+            )
+            ->setOrderings(array(
+                'name' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_ASCENDING)
+            )
+            ->execute();
+        }
 }
