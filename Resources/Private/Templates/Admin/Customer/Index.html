@@ -13,7 +13,7 @@
         </div>
         <div class="span10">
             <f:link.action controller="Admin\Customer" action="new"><button class="btn primary">Kunde anlegen</button></f:link.action><br />
-            <table class="condensed-table zebra-striped">
+            <table class="condensed-table zebra-striped rowbutton">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -31,11 +31,12 @@
                             <ts:join collection="{customer.projects}" property="code" />
                         </td>
                         <td>
-                            <f:link.action action="new" arguments="{customer: customer}" controller="Admin\Project">
-                                <button class="btn small">Neues Projekt</button>
+                            <f:link.action class="btn xsmall" action="new" style="visibility: hidden;" arguments="{customer: customer}" controller="Admin\Project">
+                                Projekt anlegen
                             </f:link.action>
-                            <f:link.action class="btn small" action="index" arguments="{customer: customer}" controller="Admin\Task">
-                                Aufgaben
+
+                            <f:link.action class="btn xsmall" action="index" style="visibility: hidden;" arguments="{customer: customer}" controller="Admin\Task">
+                                Aufgaben ansehen
                             </f:link.action>
                         </td>
                     </tr>
