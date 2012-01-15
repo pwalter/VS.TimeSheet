@@ -155,14 +155,14 @@ class Helper {
         }
 
         // Syntax: 13(:00)-14(:00)
-        if(preg_match('|^(?P<from>\d{1,2}(:\d{1,2})?)[ ]*[-][ ]*(?P<to>\d{1,2}(:\d{1,2})?)$|i', $text, $matches)) {
+        if(preg_match('|^(?P<from>\d{1,2}(:\d{1,2})?)[ ]?-[ ]?(?P<to>\d{1,2}(:\d{1,2})?)$|i', $text, $matches)) {
             //die($matches['from'].'-'.$matches['to']);
             $from = new \DateTime(preg_match('|:|', $matches['from']) ? $matches['from'] : $matches['from'].':00');
             $to = new \DateTime(preg_match('|:|', $matches['to']) ? $matches['to'] : $matches['to'].':00');
 
             $diff = $to->diff($from);
 
-            $minutes += $diff->h * 60;
+            $minutes = $diff->h * 60;
             $minutes += $diff->i;
         }
 
@@ -176,15 +176,6 @@ class Helper {
                 $minutes += (int)$matches['minutes'];
             }
         }
-
-        // Syntax: 30(m)
-        /*if(preg_match('|^(?P<minutes>[0-9]+)[m]$|i', $text, $matches)) {
-            if(isset($matches['minutes'])) {
-                $minutes += (int)$matches['minutes'];
-            }
-        }*/
-
-
 
         return $minutes;
     }

@@ -3,74 +3,13 @@
 {namespace ts=VS\TimeSheet\ViewHelpers}
 
 <f:section name="header">
-    <f:security.ifAuthenticated>
-        <f:then>
-            <h1>Erfassen für <ts:account property="fullName" /></h1>
-        </f:then>
-        <f:else>
-            <h1>Schnellerfassung</h1>
-        </f:else>
-    </f:security.ifAuthenticated>
+    <h1>Tätigkeit bearbeiten</h1>
 </f:section>
 
 <f:section name="content">
     <div class="row">
         <div class="span4">
-            <f:if condition="{account}">
-                <f:then>
-                    <h3><ts:format.date>{date}</ts:format.date></h3>
-                    <table class="condensed-table">
-                        <tbody>
-                            <tr>
-                                <td>Arbeitszeit (IST):</td>
-                                <td><ts:format.timespan format="h m">{istMinutes}</ts:format.timespan></td>
-                            </tr>
-                            <tr>
-                                <td>Arbeitszeit (SOLL):</td>
-                                <td><ts:format.timespan format="h m">{sollMinutes}</ts:format.timespan></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="progressbar" style="height: 15px;">
-                                    <f:if condition="{percentageMinutes} > 100">
-                                        <f:then>
-                                            <div class="bar" style="width: 100%; background-color: red;"></div>
-                                        </f:then>
-                                        <f:else>
-                                            <div class="bar"style="width: {percentageMinutes}%; background-color: green;"></div>
-                                        </f:else>
-                                    </f:if>
-                                    <div class="text">
-                                        {percentageMinutes}%
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </f:then>
-                <f:else>
-                    <h3>Heute noch offen</h3>
-                    <f:if condition="{items -> f:count()} != 0">
-                        <f:then>
-                            <table class="condensed-table">
-                                <tbody>
-                                    <f:for each="{items}" as="item">
-                                    <tr>
-                                        <td>{item.account.party.name.fullName}</td>
-                                        <td><ts:format.timespan format="h m">{item.missingMinutes}</ts:format.timespan></td>
-                                    </tr>
-                                    </f:for>
-                                </tbody>
-                            </table>
-                        </f:then>
-                        <f:else>
-                            <p>
-                                <strong>Feierabend :-)</strong>
-                            </p>
-                        </f:else>
-                    </f:if>
-
-                </f:else>
-            </f:if>
+            [Text]
         </div>
         <div class="span10">
             <script type="text/javascript">
@@ -231,29 +170,15 @@
                     });
                 });
             </script>
-            <f:form action="createActivity" object="{activity}" id="frmCreateActivity" name="activity" method="post">
-                <div class="clearfix">
-                    <label>Mitarbeiter</label>
-                    <div class="input">
-                    <f:if condition="{activity.account}">
-                        <f:then>
-                            <f:form.textfield class="span6 disabled" property="account.party.name.fullName" disabled="true" id="account" />
-                            <f:form.hidden property="account" />
-                        </f:then>
-                        <f:else>
-                            <f:form.select class="span6 required" property="account" options="{accounts}" optionLabelField="party.name.fullName" id="account" />
-                        </f:else>
-                    </f:if>
-                </div>
-                </div>
+            <f:form action="update" object="{activity}" id="frmUpdateActivity" name="activity" method="post">
                 <div class="clearfix">
                     <label>Benötigte Zeit</label>
                     <div class="input">
                         <div class="inline-inputs">
-                            <input class="span3 required timespanValidator" type="text" value="" id="timespan" name="timespan"  />
+                            <input class="span3 required timespanValidator" type="text" value="{activity.minutes -> ts:format.timespan()}" id="timespan" name="timespan"  />
                             <img src="{f:uri.resource(path: 'icons/help.png')}" class="cursor help" rel="popover" data-content="{helptimespan}" data-original-title="Was kann ich hier eingeben?" data-html="true" />
                             <span class="span6 help-block" id="timespanOutput">Bitte Dauer eingeben</span>
-                            <f:form.hidden property="minutes" id="timespanTotal" value="0" />
+                            <f:form.hidden property="minutes" id="timespanTotal" value="{activity.minutes}" />
                         </div>
                     </div>
                 </div>

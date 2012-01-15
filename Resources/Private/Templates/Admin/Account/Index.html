@@ -13,7 +13,7 @@
         </div>
         <div class="span10">
             <f:link.action controller="Admin\Account" action="new"><button class="btn primary">Benutzer anlegen</button></f:link.action><br />
-            <table class="condensed-table zebra-striped">
+            <table class="condensed-table zebra-striped rowbutton">
                 <thead>
                     <tr>
                         <th>Benutzername</th>
@@ -29,12 +29,31 @@
                         <td>{account.party.name.firstName}</td>
                         <td>{account.party.name.lastName}</td>
                         <td>
-                            <f:link.action action="edit" arguments="{account: account}" controller="Admin\Account">
-                                <button class="btn small">Bearbeiten</button>
+
+                            <f:link.action class="btn xsmall" action="edit" style="visibility: hidden;" arguments="{account: account}" controller="Admin\Account">
+                                ändern
                             </f:link.action>
-                            <f:link.action onclick="return confirm('Soll der Benutzer \'{account.accountIdentifier}\' wirklich entfernt werden?');" action="delete" arguments="{account: account}" controller="Admin\Account">
-                                <button class="btn small">Löschen</button>
-                            </f:link.action>
+
+                            <!-- Löschen Dialog -->
+                            <div id="modal-confirm-delete" class="modal hide fade">
+                                <div class="modal-header">
+                                    <a href="#" class="close">&times;</a>
+                                    <h3>Benutzer wirklich löschen?</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie trotzdem fortfahren?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <f:link.action class="btn danger" action="delete" arguments="{account: account}" controller="Admin\Account">
+                                        Ja, löschen
+                                    </f:link.action>
+                                </div>
+                            </div>
+
+                            <button data-controls-modal="modal-confirm-delete" data-backdrop="true" data-keyboard="true" style="visibility: hidden;" class="btn xsmall danger">löschen</button>
+
                         </td>
                     </tr>
                     </f:for>

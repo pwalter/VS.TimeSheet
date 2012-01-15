@@ -13,7 +13,7 @@
         </div>
         <div class="span10">
             <f:link.action controller="Admin\Project" action="new"><button class="btn primary">Projekt anlegen</button></f:link.action><br />
-            <table class="condensed-table zebra-striped">
+            <table class="condensed-table zebra-striped rowbutton">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -29,6 +29,10 @@
                         <td><b>{project.name}</b></td>
                         <td>{project.customer.name.fullName}</td>
                         <td>
+                            <f:link.action class="btn xsmall" action="index" style="visibility: hidden;" arguments="{project: project}" controller="Admin\Task">
+                                Aufgaben ansehen
+                            </f:link.action>
+
                             <!-- Löschen Dialog -->
                             <div id="modal-confirm-delete" class="modal hide fade">
                                 <div class="modal-header">
@@ -47,10 +51,7 @@
                                 </div>
                             </div>
 
-                            <button data-controls-modal="modal-confirm-delete" data-backdrop="true" data-keyboard="true" class="btn xsmall">Löschen</button>
-                            <f:link.action class="btn xsmall" action="index" arguments="{project: project}" controller="Admin\Task">
-                                Aufgaben
-                            </f:link.action>
+                            <button data-controls-modal="modal-confirm-delete" style="visibility: hidden;" data-backdrop="true" data-keyboard="true" class="btn xsmall danger">löschen</button>
                         </td>
                     </tr>
                     </f:for>

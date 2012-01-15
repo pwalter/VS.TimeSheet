@@ -29,6 +29,18 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
 
     /**
      * @FLOW3\Inject
+     * @var \VS\TimeSheet\Domain\Repository\CustomerRepository
+     */
+    protected $customerRepository;
+
+    /**
+     * @FLOW3\Inject
+     * @var \VS\TimeSheet\Domain\Repository\ProjectRepository
+     */
+    protected $projectRepository;
+
+    /**
+     * @FLOW3\Inject
      * @var VS\TimeSheet\Core\Helper
      */
     protected $helper;
@@ -66,19 +78,6 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
 
         $date1->setTime(0,0,0);
         $date2->setTime(23,59,59);
-
-        /*
-        $activities = $this->activityRepository->findBetweenDates(
-             $this->findCurrentAccount(),
-             $date1,
-             $date2
-        );
-
-        $sumMinutes = 0;
-        foreach($activities as $activity)
-            $sumMinutes += $activity->getMinutes();
-        $this->view->assign('istMinutes', $sumMinutes);
-        */
 
         /**************************** Table ****************************/
         // Search activities for each day separate
@@ -131,6 +130,58 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
             'dateTo' => $date2->format('d.m.Y')
         ));
 	}
+
+    /**
+     * @param \VS\TimeSheet\Domain\Model\Activity $activity
+     */
+    public function editAction(\VS\TimeSheet\Domain\Model\Activity $activity) {
+        $this->view->assign('activity', $activity);
+        /** Customer **/
+        $customers = $this->customerRepository->findAll();
+        $this->view->assign('customers', $customers);
+
+        $this->view->assign('helptimespan', <<<LABEL
+Dauer:
+<ul>
+    <li>"<strong>2h 15m</strong>" = 2 Stunden und 15 Minuten</li>
+    <li>"<strong>1h</strong>" = 1 Stunde</li>
+    <li>"<strong>50m</strong>" = 50 Minuten</li>
+    <li>"<strong>10</strong>" = 10 Minuten</li>
+    <li>"<strong>02:15</strong>" = 2 Stunden und 15 Minuten</li>
+</ul>
+<br />
+Uhrzeiten:
+<ul>
+    <li>"<strong>12 - 14</strong>" = 12 Uhr bis 14 Uhr</li>
+    <li>"<strong>12:30 - 14</strong>" = 12:30 Uhr bis 14 Uhr</li>
+    <li>"<strong>12 - 14:45</strong>" = 12 Uhr bis 14:45 Uhr</li>
+</ul>
+LABEL
+);
+
+        /** Project for first Customer **/
+        $projects = $activity->getProject()->getCustomer()->getProjects();
+        $this->view->assign('projects', $projects);
+
+        $tasks = array();
+        foreach($activity->getProject()->getTasks() as $task) {
+            if($task->getActive())
+                $tasks[] = $task;
+        }
+        $this->view->assign('tasks', $tasks);
+    }
+
+    /**
+     * @param \VS\TimeSheet\Domain\Model\Activity $activity
+     * @return void
+     */
+    public function updateAction(\VS\TimeSheet\Domain\Model\Activity $activity) {
+
+        $this->activityRepository->update($activity);
+
+        $this->addFlashMessage('Tätigkeit erfolgreich bearbeitet');
+        $this->redirect('list');
+    }
 
     /**
      * @param \VS\TimeSheet\Domain\Model\Activity $activity
