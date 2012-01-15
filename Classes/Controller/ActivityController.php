@@ -116,7 +116,7 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
         /* Percentage */
         $percentage = 0;
         if($sollMinutes != 0)
-            $percentage = round(100-((($sollMinutes-$sumMinutes)/$sollMinutes)*100), 2);
+            $percentage = round(100-((($sollMinutes-$sumTotalMinutes)/$sollMinutes)*100), 2);
 
         $this->view->assign('percentageMinutes', $percentage);
         $this->view->assign('weekdays', $weekdays);
