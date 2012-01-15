@@ -44,7 +44,7 @@ class Task {
 
     /**
      * @var \Doctrine\Common\Collections\Collection<\VS\TimeSheet\Domain\Model\Activity>
-     * @ORM\OneToMany(mappedBy="task", cascade={"all"})
+     * @ORM\OneToMany(mappedBy="task")
      * @ORM\OrderBy({"date" = "ASC"})
      */
     protected $activities;
@@ -53,7 +53,6 @@ class Task {
      * Constructor
      */
     public function __construct($name = '') {
-        //$this->projects = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->activities = new \Doctrine\Common\Collections\ArrayCollection();
 
         $this->name = $name;

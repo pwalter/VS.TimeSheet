@@ -43,14 +43,14 @@ class Project {
 
     /**
      * @var \Doctrine\Common\Collections\Collection<\VS\TimeSheet\Domain\Model\Task>
-     * @ORM\OneToMany(mappedBy="project", cascade={"all"})
+     * @ORM\OneToMany(mappedBy="project")
      * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $tasks;
 
     /**
 	 * @var \Doctrine\Common\Collections\Collection<\VS\TimeSheet\Domain\Model\Activity>
-	 * @ORM\OneToMany(mappedBy="project", cascade={"all"})
+	 * @ORM\OneToMany(mappedBy="project")
 	 */
     protected $activities;
 

@@ -30,7 +30,7 @@
                                 <td><ts:format.timespan format="h m">{sollMinutes}</ts:format.timespan></td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="progressbar">
+                                <td colspan="2" class="progressbar" style="height: 15px;">
                                     <f:if condition="{percentageMinutes} > 100">
                                         <f:then>
                                             <div class="bar" style="width: 100%; background-color: red;"></div>
@@ -49,7 +49,7 @@
                 </f:then>
                 <f:else>
                     <h3>Heute noch offen</h3>
-                    <f:if condition="{ts:condition.array(items)}!=0">
+                    <f:if condition="{items -> f:count()} != 0">
                         <f:then>
                             <table class="condensed-table">
                                 <tbody>
@@ -72,14 +72,64 @@
                 </f:else>
             </f:if>
         </div>
-        <div class="span4">
+        <div class="span10">
             <script type="text/javascript">
                 $(document).ready(function(){
-                    $('#timespan').mask("99:99",{placeholder:"_"});
+                    $(document).ready(function(){
+                        $("img[rel=popover]")
+                            .popover({
+                              offset: 10
+                            })
+                            .click(function(e) {
+                              e.preventDefault()
+                            })
+                    });
+
+                    $("input#timespan").typeWatch({
+                        callback: function(){
+                            $.ajax({
+                                type: 'POST',
+                                url: '<f:uri.action action="parseTimespan" controller="Activity" subpackage="Json" />',
+                                data: {
+                                    text: $('input#timespan').val()
+                                },
+                                success: function(data) {
+                                    var text = 'Ich interpretiere: ';
+
+                                    if(data.hours != 0)
+                                        text += '<strong>' + data.hours + ' ' + (data.hours == 1 ? 'Stunde' : 'Stunden') + ' </strong>';
+
+
+                                    if(data.minutes != 0) {
+                                        if(data.hours != 0)
+                                            text += ' und ';
+
+                                        text += '<strong>' + data.minutes + ' ' + (data.minutes == 1 ? 'Minute' : 'Minuten') + ' </strong>';
+                                    }
+
+                                    if(data.hours == 0 && data.minutes == 0)
+                                        text = 'Ich verstehe das leider nicht...';
+
+
+                                    $('span#timespanOutput').html(text);
+                                    $('input#timespanTotal').val(data.totalMinutes);
+                                }
+                            });
+                        },
+                        wait: 750,
+                        highlight: true,
+                        captureLength: 1
+                    });
 
                     $.validator.addMethod("username", function(value) {
                         return value == "--- Bitte wählen ---";
                     }, 'Bitte Benutzer angeben');
+
+                    $.validator.addMethod("timespanValidator", function() {
+                        var value = $('input#timespanTotal').val();
+                        console.log(value);
+                        return value.length != 0 && value != 0;
+                    }, '');
 
                     $('#frmCreateActivity').validate({
                         errorClass:'error',
@@ -167,7 +217,6 @@
                                 task: $("select#task").val()
                             },
                             success: function(data) {
-                                console.log(data);
                                 if(data.comment.length != 0) {
                                     $("span#taskDetails").html('Hinweis zu dieser Aufgabe');
                                     $('span#taskDetails').popover({
@@ -201,12 +250,20 @@
                     <label>Benötigte Zeit</label>
                     <div class="input">
                         <div class="inline-inputs">
-                            <input class="mini required" type="text" value="" name="timespan" id="timespan" />
-                            <span class="span6 help-block">Beispiel: 02:45</span>
+                            <input class="span3 required timespanValidator" type="text" value="" id="timespan" name="timespan"  /><img src="{f:uri.resource(path: 'icons/help.png')}" rel="popover" data-content="formate" data-original-title="Was kann ich hier eingeben?" />
+                            <span class="span6 help-block" id="timespanOutput">Bitte Dauer eingeben</span>
+                            <f:form.hidden property="minutes" id="timespanTotal" value="0" />
                         </div>
                     </div>
                 </div>
-                <div class="clearfix">
+                <f:if condition="{accounts -> count()} == 0">
+                    <f:then>
+                        <div class="clearfix" style="display: hidden;">
+                    </f:then>
+                    <f:else>
+                        <div class="clearfix">
+                    </f:else>
+                </f:if>
                     <label for="customer">Kunde</label>
                     <div class="input">
                         <f:form.select class="span6" property="task.project.customer" options="{customers}" name="customer" optionLabelField="name.fullName" id="customer" />

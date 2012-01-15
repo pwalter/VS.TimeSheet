@@ -60,7 +60,7 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
             if((string)$role == "Everybody")
                 continue;
 
-            $roles[] = (string)$role;
+            $roles[] = $role;
         }
         $_SESSION['roles'] = $roles;
         $this->view->assign('allRoles', $roles);
@@ -95,9 +95,7 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
      */
     public function editAction(\TYPO3\FLOW3\Security\Account $account) {
         $this->view->assign('account', $account);
-        $this->view->assign('selectedRoles', $account->getRoles());
-//        $roles = $this->policyService->getRoles();
-//        unset($roles[array_search('Everybody', $roles)]);
+        //$this->view->assign('selectedRoles', $account->getRoles());
 
         $roles = array();
         foreach($this->policyService->getRoles() as $role) {
@@ -106,13 +104,11 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
 
             $roles[] = (string)$role;
         }
-        $_SESSION['roles'] = $roles;
+
+        // todo: Dirty I know but i works for now
+        //$_SESSION['roles'] = $roles;
 
         $this->view->assign('allRoles', $roles);
-        $arr = $this->helper->getSettings('VS.TimeSheet.employee.workingHoursMode');
-
-
-        $this->view->assign('workingHoursModes', $this->helper->getSettings('VS.TimeSheet.employee.workingHoursMode'));
     }
 
     /**
@@ -131,14 +127,16 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
      * @return void
      */
     public function updateAction(\TYPO3\FLOW3\Security\Account $account, $password = '', $roles = array()) {
+        /*
         foreach ($account->getRoles() as $role) {
             $account->removeRole($role);
         }
 
         foreach ($roles as $role) {
+            // todo: Dirty I know but i works for now
             $account->addRole(new \TYPO3\FLOW3\Security\Policy\Role($_SESSION['roles'][$role]));
 		}
-
+*/
         if (trim($password) != '') {
             $account->setCredentialsSource($this->hashService->hashPassword($password));
         }

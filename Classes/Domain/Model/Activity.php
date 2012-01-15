@@ -12,14 +12,14 @@ class Activity {
     /**
      * @var \VS\TimeSheet\Domain\Model\Task
      * @FLOW3\Validate(type="NotEmpty")
-     * @ORM\ManyToOne(inversedBy="activities", cascade={"all"})
+     * @ORM\ManyToOne(inversedBy="activities")
      */
     protected $task;
 
     /**
      * @var \VS\TimeSheet\Domain\Model\Project
      * @FLOW3\Validate(type="NotEmpty")
-     * @ORM\ManyToOne(inversedBy="activities", cascade={"all"})
+     * @ORM\ManyToOne(inversedBy="activities")
      */
     protected $project;
 

@@ -152,19 +152,13 @@ class StandardController extends \VS\TimeSheet\MVC\Controller\BasicController {
 
     /**
      * @param \VS\TimeSheet\Domain\Model\Activity $activity
-     * @param string $timespan
      * @return void
      */
-    public function createActivityAction(\VS\TimeSheet\Domain\Model\Activity $activity, $timespan) {
+    public function createActivityAction(\VS\TimeSheet\Domain\Model\Activity $activity) {
         $errors = false;
 
         if(is_null($activity->getAccount())) {
             $this->addFlashMessageError('Mitarbeiter muss angegeben sein!');
-            $errors = true;
-        }
-
-        if(is_null($timespan) || $timespan == "" || $timespan == "00:00") {
-            $this->addFlashMessageError('Benötigt Zeit muss angegeben sein!');
             $errors = true;
         }
 
@@ -173,16 +167,9 @@ class StandardController extends \VS\TimeSheet\MVC\Controller\BasicController {
             return;
         }
 
-        $hour = (int)substr($timespan, 0, strrpos($timespan, ':'));
-        $minute = (int)substr($timespan, strrpos($timespan, ':')+1, strlen($timespan));
-
-        $totalMinutes = ($hour*60) + $minute;
-
-        $activity->setMinutes($totalMinutes);
-
         $this->activityRepository->add($activity);
 
-        $this->addFlashMessage('Erfolgreich '.$this->helper->formatMinutesToTimespan($totalMinutes, 'h m').' für '.$activity->getTask()->getName().' auf das Zeitkonto von '.$activity->getAccount()->getParty()->getName()->getFullName().' gebucht');
+        $this->addFlashMessage('Erfolgreich '.$this->helper->formatMinutesToTimespan($activity->getMinutes(), 'h m').' für '.$activity->getTask()->getName().' auf das Zeitkonto von '.$activity->getAccount()->getParty()->getName()->getFullName().' gebucht');
         $this->redirect('index');
     }
 

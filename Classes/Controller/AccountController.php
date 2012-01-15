@@ -58,11 +58,9 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
      * @return void
      */
     public function updateProfileAction(\TYPO3\FLOW3\Security\Account $account, $password = '') {
-        if (count(trim($password)) != 0) {
+        if (trim($password) != '') {
             $account->setCredentialsSource($this->hashService->hashPassword($password));
         }
-
-        //\TYPO3\FLOW3\var_dump($account);
 
         try {
             $this->accountRepository->update($account);
@@ -70,7 +68,7 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
             $this->addFlashMessage('Sie haben Ihr Profil erfolgreich bearbeitet!');
             $this->redirect('index', 'Standard');
         } catch (Exception $e) {
-            $this->addFlashMessageError($e->getMessage());
+            die($e->getMessage());
             return;
         }
 

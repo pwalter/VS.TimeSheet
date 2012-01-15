@@ -63,6 +63,19 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicJsonControlle
         );
         $this->view->assign('value', $value);
     }
+
+    /**
+     * @param string $text
+     */
+    public function parseTimespanAction($text) {
+        $minutes = $this->helper->getMinutesFromString($text);
+
+        $this->view->assign('value', array(
+            'hours' => (int)($minutes / 60),
+            'minutes' => $minutes % 60,
+            'totalMinutes' => $minutes
+        ));
+    }
 }
 
 ?>

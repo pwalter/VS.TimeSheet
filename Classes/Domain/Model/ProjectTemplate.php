@@ -17,14 +17,14 @@ class ProjectTemplate {
 
     /**
      * @var \Doctrine\Common\Collections\Collection<\VS\TimeSheet\Domain\Model\Task>
-     * @ORM\ManyToMany(cascade={"all"})
+     * @ORM\ManyToMany
      * @ORM\OrderBy({"identifier" = "ASC"})
      */
     protected $tasks;
 
     /**
 	 * @var \Doctrine\Common\Collections\Collection<\VS\TimeSheet\Domain\Model\Project>
-	 * @ORM\OneToMany(mappedBy="projectTemplate", cascade={"all"})
+	 * @ORM\OneToMany(mappedBy="projectTemplate")
 	 */
 	protected $projects;
 

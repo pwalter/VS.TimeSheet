@@ -100,6 +100,16 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
 	}
 
     /**
+     * @param \VS\TimeSheet\Domain\Model\Activity $activity
+     * @return void
+     */
+    public function deleteAction(\VS\TimeSheet\Domain\Model\Activity $activity) {
+        $this->activityRepository->remove($activity);
+        $this->addFlashMessage('Tätigkeit wurde erfolgreich gelöscht');
+        $this->redirect('list');
+    }
+
+    /**
      * @return void
      */
     public function createAction() {

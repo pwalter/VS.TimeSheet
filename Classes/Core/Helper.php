@@ -136,6 +136,58 @@ class Helper {
 			return $identifier;
 		}
     }
+
+    /**
+     * @param $text
+     */
+    public function getMinutesFromString($text) {
+        $minutes = 0;
+
+        // Syntax: 1h 40m
+        if(preg_match('|^((?P<hours>[0-9]+)[sh])?[ ]*((?P<minutes>\d+)m)?$|i', $text, $matches)) {
+            if(isset($matches['hours'])) {
+                $minutes = ((int)$matches['hours']) * 60;
+            }
+
+            if(isset($matches['minutes'])) {
+                $minutes += (int)$matches['minutes'];
+            }
+        }
+
+        // Syntax: 13(:00)-14(:00)
+        if(preg_match('|^(?P<from>\d{1,2}(:\d{1,2})?)[ ]*[-][ ]*(?P<to>\d{1,2}(:\d{1,2})?)$|i', $text, $matches)) {
+            //die($matches['from'].'-'.$matches['to']);
+            $from = new \DateTime(preg_match('|:|', $matches['from']) ? $matches['from'] : $matches['from'].':00');
+            $to = new \DateTime(preg_match('|:|', $matches['to']) ? $matches['to'] : $matches['to'].':00');
+
+            $diff = $to->diff($from);
+
+            $minutes += $diff->h * 60;
+            $minutes += $diff->i;
+        }
+
+        // Syntax: 01:40
+        if(preg_match('|^(?P<hours>[0-9]+):(?P<minutes>[0-9]+)$|i', $text, $matches)) {
+            if(isset($matches['hours'])) {
+                $minutes = ((int)$matches['hours']) * 60;
+            }
+
+            if(isset($matches['minutes'])) {
+                $minutes += (int)$matches['minutes'];
+            }
+        }
+
+        // Syntax: 30(m)
+        /*if(preg_match('|^(?P<minutes>[0-9]+)[m]$|i', $text, $matches)) {
+            if(isset($matches['minutes'])) {
+                $minutes += (int)$matches['minutes'];
+            }
+        }*/
+
+
+
+        return $minutes;
+    }
 }
 
 ?>

@@ -114,6 +114,26 @@
                             </f:if>
                         </td>
                         <td>
+                            <!-- Löschen Dialog -->
+                            <div id="modal-confirm-delete" class="modal hide fade">
+                                <div class="modal-header">
+                                    <a href="#" class="close">&times;</a>
+                                    <h3>Tätigkeit wirklich löschen?</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie trotzdem fortfahren?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <f:link.action class="btn primary" action="delete" arguments="{activity: activity}" controller="Activity">
+                                        Ja, löschen
+                                    </f:link.action>
+                                </div>
+                            </div>
+
+                            <button data-controls-modal="modal-confirm-delete" data-backdrop="true" data-keyboard="true" class="btn xsmall">Löschen</button>
+
                             <!--
                             <div id="modal-details-{activity.identifier}" class="modal hide fade">
                                 <div class="modal-header">

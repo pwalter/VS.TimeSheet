@@ -35,6 +35,21 @@
                     }
                 });
             });
+
+
+            // Zeitraum erkennung
+            $( "input#timespan" ).keyup(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '<f:uri.action action="parseTimespan" controller="Activity" subpackage="Json" />',
+                    data: {
+                        text: $(this).val()
+                    },
+                    success: function(data) {
+                        $('span#timespanOutput').html(data.hours + 'h ' + data.minutes + 'm');
+                    }
+                });
+            });
         });
     </script>
     <div class="row">
@@ -60,18 +75,13 @@
                     </div>
                 </div>
                 <div class="clearfix">
-                    <label>Was?</label>
+                    <label>Wie lange?</label>
                     <div class="input">
                         <div class="inline-inputs">
-                            <input class="mini" type="text" value="" name="timespan" id="task" />
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <label>Für wen?</label>
-                    <div class="input">
-                        <div class="inline-inputs">
-                            <input class="mini" type="text" value="" name="timespan" id="customer" />
+                            <input class="span3" type="text" value="" name="timespan" id="timespan" />
+                            <span class="span6 help-block" id="timespanOutput">
+
+                            </span>
                         </div>
                     </div>
                 </div>
