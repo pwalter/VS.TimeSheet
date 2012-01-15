@@ -1,5 +1,5 @@
 Introduction
-=======================
+============
 
 This is a simple timesheet application based on the FLOW3 PHP Framework.
 It's my first experience with a real world application in FLOW3 so if you have ANY idea on how
