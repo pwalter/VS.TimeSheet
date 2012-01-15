@@ -102,7 +102,7 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
             if((string)$role == "Everybody")
                 continue;
 
-            $roles[] = (string)$role;
+            $roles[] = new \VS\TimeSheet\Security\Policy\Role((string)$role);
         }
 
         // todo: Dirty I know but i works for now
@@ -124,25 +124,34 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
      * @param \TYPO3\FLOW3\Security\Account $account
      * @param string $password
      * @param array $roles
+     * @param array $hours
      * @return void
      */
-    public function updateAction(\TYPO3\FLOW3\Security\Account $account, $password = '', $roles = array()) {
-        /*
+    public function updateAction(\TYPO3\FLOW3\Security\Account $account, $password = '', $roles = array(), $hours = array()) {
+        //\TYPO3\FLOW3\var_dump($roles);die();
+
+
         foreach ($account->getRoles() as $role) {
             $account->removeRole($role);
         }
 
         foreach ($roles as $role) {
-            // todo: Dirty I know but i works for now
-            $account->addRole(new \TYPO3\FLOW3\Security\Policy\Role($_SESSION['roles'][$role]));
+            $account->addRole(new \TYPO3\FLOW3\Security\Policy\Role($role));
 		}
-*/
+
+        $party = $account->getParty();
+        foreach($hours as $key => $value) {
+            $minutes = $this->helper->getMinutesFromString($value);
+            $property = 'setMinutes'.ucfirst($key);
+            $party->$property($minutes);
+        }
+
         if (trim($password) != '') {
             $account->setCredentialsSource($this->hashService->hashPassword($password));
         }
 
         $this->accountRepository->update($account);
-        $this->employeeRepository->update($account->getParty());
+        $this->employeeRepository->update($party);
         $this->addFlashMessage('Benutzer wurde erfolgreich bearbeitet');
         $this->redirect('index');
     }

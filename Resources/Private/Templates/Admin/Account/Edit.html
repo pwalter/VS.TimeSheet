@@ -45,7 +45,7 @@
                     <div class="clearfix">
                         <label>Rolle</label>
                         <div class="input">
-                            <f:form.select name="roles" property="roles" multiple="true" options="{allRoles}" id="role" />
+                            <f:form.select name="roles" value="{roles}" multiple="true" options="{allRoles}" id="role" />
                         </div>
                     </div>
                 </fieldset>
@@ -54,43 +54,43 @@
                     <div class="clearfix">
                         <label>Montag</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesMonday" /> Minuten
+                            <f:form.textbox class="small" name="hours[monday]" id="monday" value="{account.party.minutesMonday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">
                         <label>Dienstag</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesTuesday" /> Minuten
+                            <f:form.textbox class="small" name="hours[tuesday]" id="tuesday" value="{account.party.minutesTuesday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">
                         <label>Mittwoch</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesWednesday" /> Minuten
+                            <f:form.textbox class="small" name="hours[wednesday]" id="wednesday" value="{account.party.minutesWednesday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">
                         <label>Donnerstag</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesThursday" /> Minuten
+                            <f:form.textbox class="small" name="hours[thursday]" id="thursday" value="{account.party.minutesThursday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">
                         <label>Freitag</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesFriday" /> Minuten
+                            <f:form.textbox class="small" name="hours[friday]" id="friday" value="{account.party.minutesFriday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">
                         <label>Samstag</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesSaturday" /> Minuten
+                            <f:form.textbox class="small" name="hours[saturday]" id="saturday" value="{account.party.minutesSaturday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">
                         <label>Sonntag</label>
                         <div class="input">
-                            <f:form.textbox class="small" property="party.minutesSunday" /> Minuten
+                            <f:form.textbox class="small" name="hours[sunday]" id="sunday" value="{account.party.minutesSunday -> ts:format.timespan()}" />
                         </div>
                     </div>
                     <div class="clearfix">

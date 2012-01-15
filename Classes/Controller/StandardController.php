@@ -180,10 +180,18 @@ LABEL
 
         $this->activityRepository->add($activity);
 
+        // Invoke signal that a new activity has been created
+        $this->emitActivityCreated($activity);
+
         $this->addFlashMessage('Erfolgreich '.$this->helper->formatMinutesToTimespan($activity->getMinutes(), 'h m').' für '.$activity->getTask()->getName().' auf das Zeitkonto von '.$activity->getAccount()->getParty()->getName()->getFullName().' gebucht');
         $this->redirect('index');
     }
 
+    /**
+     * @FLOW3\Signal
+     * @param \VS\TimeSheet\Domain\Model\Activity $activity
+     */
+    protected function emitActivityCreated(\VS\TimeSheet\Domain\Model\Activity $activity) {}
 }
 
 ?>
