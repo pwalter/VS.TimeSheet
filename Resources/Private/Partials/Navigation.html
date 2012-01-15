@@ -17,10 +17,12 @@
     <li class="dropdown">
         <a href="#" class="dropdown-toggle">Verwaltung</a>
         <ul class="dropdown-menu">
+            <f:security.ifHasRole role="Administrator">
             <li><f:link.action controller="Admin\Account">Benutzer</f:link.action></li>
             <li><f:link.action controller="Admin\Tag">Tags</f:link.action></li>
             <li><f:link.action controller="Admin\Customer">Kunden</f:link.action></li>
             <li><f:link.action controller="Admin\Project">Projekte</f:link.action></li>
+            </f:security.ifHasRole>
             <li><f:link.action controller="Admin\Task">Aufgaben</f:link.action></li>
         </ul>
     </li>

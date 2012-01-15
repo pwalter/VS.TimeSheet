@@ -76,22 +76,22 @@ html body .container > .content .cursor.pointer {
 html body .container > .content .cursor.help {
   cursor: help;
 }
-/* line 2, /Users/pascalwalter/Sites/TimeSheet/Packages/Application/VS.TimeSheet/Resources/Public/sass/_table.scss */
+/* line 2, ../sass/_table.scss */
 html body .container > .content table tfoot {
   color: #d3d3d3;
 }
-/* line 3, /Users/pascalwalter/Sites/TimeSheet/Packages/Application/VS.TimeSheet/Resources/Public/sass/widget/_progressbar.scss */
+/* line 3, ../sass/widget/_progressbar.scss */
 html body .container > .content .progressbar {
   border: 1px solid #DDD;
   background-color: white;
   height: 15px;
   padding: 1px;
 }
-/* line 10, /Users/pascalwalter/Sites/TimeSheet/Packages/Application/VS.TimeSheet/Resources/Public/sass/widget/_progressbar.scss */
+/* line 10, ../sass/widget/_progressbar.scss */
 html body .container > .content .progressbar > div.bar {
   height: 100%;
 }
-/* line 14, /Users/pascalwalter/Sites/TimeSheet/Packages/Application/VS.TimeSheet/Resources/Public/sass/widget/_progressbar.scss */
+/* line 14, ../sass/widget/_progressbar.scss */
 html body .container > .content .progressbar > div.text {
   height: 100%;
   width: 100%;
@@ -101,6 +101,10 @@ html body .container > .content .progressbar > div.text {
   text-shadow: white 0px 1px 2px, white 0px -1px 2px, white -1px 0px 2px, white 2px 0px 2px;
 }
 /* line 92, ../sass/site.scss */
+html body .container span.label {
+  cursor: default;
+}
+/* line 96, ../sass/site.scss */
 html body .container > footer p {
   text-align: center;
 }

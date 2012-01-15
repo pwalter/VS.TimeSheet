@@ -143,18 +143,18 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
         $this->view->assign('helptimespan', <<<LABEL
 Dauer:
 <ul>
-    <li>"<strong>2h 15m</strong>" = 2 Stunden und 15 Minuten</li>
-    <li>"<strong>1h</strong>" = 1 Stunde</li>
-    <li>"<strong>50m</strong>" = 50 Minuten</li>
-    <li>"<strong>10</strong>" = 10 Minuten</li>
-    <li>"<strong>02:15</strong>" = 2 Stunden und 15 Minuten</li>
+    <li><strong>2h 15m</strong> = 2 Stunden und 15 Minuten</li>
+    <li><strong>1h</strong> = 1 Stunde</li>
+    <li><strong>50m</strong> = 50 Minuten</li>
+    <li><strong>10</strong> = 10 Minuten</li>
+    <li><strong>02:15</strong> = 2 Stunden und 15 Minuten</li>
 </ul>
 <br />
 Uhrzeiten:
 <ul>
-    <li>"<strong>12 - 14</strong>" = 12 Uhr bis 14 Uhr</li>
-    <li>"<strong>12:30 - 14</strong>" = 12:30 Uhr bis 14 Uhr</li>
-    <li>"<strong>12 - 14:45</strong>" = 12 Uhr bis 14:45 Uhr</li>
+    <li><strong>12 - 14</strong> = 12 Uhr bis 14 Uhr</li>
+    <li><strong>12:30 - 14</strong> = 12:30 Uhr bis 14 Uhr</li>
+    <li><strong>12 - 14:45</strong> = 12 Uhr bis 14:45 Uhr</li>
 </ul>
 LABEL
 );

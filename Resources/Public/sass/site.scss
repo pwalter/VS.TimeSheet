@@ -89,6 +89,10 @@ html {
                 @import "widget/progressbar";
             }
 
+            span.label {
+                cursor: default;
+            }
+
             > footer p {
                 text-align: center;
             }

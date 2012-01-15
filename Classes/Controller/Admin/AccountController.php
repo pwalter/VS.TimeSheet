@@ -95,7 +95,13 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
      */
     public function editAction(\TYPO3\FLOW3\Security\Account $account) {
         $this->view->assign('account', $account);
-        //$this->view->assign('selectedRoles', $account->getRoles());
+
+        $selectedRoles = array();
+        foreach($account->getRoles() as $role)
+            $selectedRoles[] = (string)$role;
+        $this->view->assign('selectedRoles', $selectedRoles);
+
+        //\TYPO3\FLOW3\var_dump($selectedRoles);
 
         $roles = array();
         foreach($this->policyService->getRoles() as $role) {
@@ -104,9 +110,6 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
 
             $roles[] = new \VS\TimeSheet\Security\Policy\Role((string)$role);
         }
-
-        // todo: Dirty I know but i works for now
-        //$_SESSION['roles'] = $roles;
 
         $this->view->assign('allRoles', $roles);
     }
@@ -129,7 +132,6 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
      */
     public function updateAction(\TYPO3\FLOW3\Security\Account $account, $password = '', $roles = array(), $hours = array()) {
         //\TYPO3\FLOW3\var_dump($roles);die();
-
 
         foreach ($account->getRoles() as $role) {
             $account->removeRole($role);
