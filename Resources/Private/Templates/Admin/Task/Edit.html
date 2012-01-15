@@ -1,0 +1,90 @@
+<f:layout name="Master"/>
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Aufgabe '{task.name}' bearbeiten</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            [Text]
+        </div>
+        <div class="span10">
+            <f:form action="update" object="{task}" name="task" method="post">
+                <fieldset>
+                    <legend>Aufgabendaten</legend>
+                    <div class="clearfix">
+                        <label>Code</label>
+                        <div class="input">
+                            <f:form.textbox class="span6 xlarge" property="code" id="code" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Name</label>
+                        <div class="input">
+                            <f:form.textbox class="span6 xlarge" property="name" id="name" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Kommentar</label>
+                        <div class="input">
+                            <f:form.textarea class="span6 xlarge" rows="5" cols="200" property="comment" id="comment" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Zuordnung</legend>
+                    <div class="clearfix">
+                        <label for="customer">Kunde</label>
+                        <div class="input">
+                            <f:form.select class="span6" options="{customers}" property="project.customer" name="customer" optionLabelField="name.fullName" id="customer" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="project">Projekt</label>
+                        <div class="input">
+                            <f:form.select class="span6" property="project" options="{projects}" name="project" optionLabelField="name" id="project" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="input">
+                            <input type="submit" class="btn primary" value="Speichern">
+                        </div>
+                    </div>
+                </fieldset>
+            </f:form>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("select#customer").change(function(){
+                        $("select#customer").attr('disabled', 'disabled');
+                        $("select#project").attr('disabled', 'disabled');
+                        $.ajax({
+                            type: 'POST',
+                            url: '<f:uri.action action="customerSelected" controller="AdminTask" subpackage="Json" />',
+                            data: {
+                                customer: $("select#customer").val()
+                            },
+                            success: function(data) {
+                                // Set Projects
+                                var optionsProjects = '';
+                                for (var i = 0; i < data.projects.length; i++) {
+                                    optionsProjects += '<option value="' + data.projects[i].value + '">' + data.projects[i].text + '</option>';
+                                }
+                                $("select#project").html(optionsProjects);
+                                $('select#project option:first').attr('selected', 'selected');
+
+                                $("select#project").trigger( "change" );
+                                $("select#project").removeAttr('disabled');
+
+                                // Customer
+                                $("select#customer").removeAttr('disabled');
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</f:section>

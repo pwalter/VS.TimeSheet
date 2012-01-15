@@ -80,6 +80,41 @@ class TaskController extends \VS\TimeSheet\MVC\Controller\BasicController {
         $this->taskRepository->add($task);
         $this->redirect('index');
     }
+
+    /**
+     * @param \VS\TimeSheet\Domain\Model\Task $task
+     */
+    public function editAction(\VS\TimeSheet\Domain\Model\Task $task) {
+        $this->view->assign('task', $task);
+
+        // Customer
+        $customers = $this->customerRepository->findAll();
+        $this->view->assign('customers', $customers);
+
+        // Project
+        $projects = $task->getProject()->getCustomer()->getProjects();
+        $this->view->assign('projects', $projects);
+    }
+
+    /**
+     * @param \VS\TimeSheet\Domain\Model\Task $task
+     */
+    public function updateAction(\VS\TimeSheet\Domain\Model\Task $task) {
+
+        $this->taskRepository->update($task);
+        $this->addFlashMessage('Aufgabe wurde erfolgreich bearbeitet');
+        $this->redirect('index');
+    }
+
+    /**
+     * @param \VS\TimeSheet\Domain\Model\Task $task
+     * @return void
+     */
+    public function deleteAction(\VS\TimeSheet\Domain\Model\Task $task) {
+        $this->taskRepository->remove($task);
+        $this->addFlashMessage('Aufgabe wurde erfolgreich entfernt');
+        $this->redirect('index');
+    }
 }
 
 ?>

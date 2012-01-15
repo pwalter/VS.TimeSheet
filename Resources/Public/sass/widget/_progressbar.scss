@@ -1,0 +1,23 @@
+$progressbar_height: 15px;
+$progressbar_padding: 1px;
+.progressbar {
+    border:1px solid #DDD;
+    background-color:white;
+    height:$progressbar_height;
+    padding:$progressbar_padding;
+    //z-index: 99;
+
+    > div.bar {
+        height: 100%;
+    }
+
+    > div.text {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        top: ($progressbar_height + (2*$progressbar_padding)) * -1;
+        //.text-shadow(white, 0px, 1px, 1px);
+        @include text-shadow(white 0px 1px 2px, white 0px -1px 2px, white -1px 0px 2px, white 2px 0px 2px);
+    }
+}

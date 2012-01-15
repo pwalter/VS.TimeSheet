@@ -55,6 +55,8 @@ class ProjectController extends \VS\TimeSheet\MVC\Controller\BasicController {
         $this->redirect('index');
     }
 
+
+
     /**
      * @param \VS\TimeSheet\Domain\Model\Project $project
      * @return void

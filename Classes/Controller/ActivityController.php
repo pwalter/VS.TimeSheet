@@ -40,7 +40,9 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
      */
     public function listAction($dateFrom = '', $dateTo = '') {
         $timezone = new \DateTimeZone('Europe/Berlin');
+        $account = $this->findCurrentAccount();
 
+        // Calculate dates to display between
         if($dateFrom == '') {
             // If today is sunday, we need to set first day of week to Monday last week
             $now = new \DateTime(null, $timezone);
@@ -65,6 +67,7 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
         $date1->setTime(0,0,0);
         $date2->setTime(23,59,59);
 
+        /*
         $activities = $this->activityRepository->findBetweenDates(
              $this->findCurrentAccount(),
              $date1,
@@ -75,8 +78,39 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
         foreach($activities as $activity)
             $sumMinutes += $activity->getMinutes();
         $this->view->assign('istMinutes', $sumMinutes);
+        */
 
-        $sollMinutes = $this->helper->getEmployeeWorkingMinutes($this->findCurrentAccount()->getParty(), $date1, $date2);
+        /**************************** Table ****************************/
+        // Search activities for each day separate
+        $weekdays = $date2->diff($date1)->days;
+        $sumTotalMinutes = 0;
+
+        $days = array();
+        for($i = $weekdays; $i >= 0; $i--) {
+            $date = clone $date1;
+            $date = $date->modify('+'.$i.' days');
+
+            $activities = $this->activityRepository->findByDate($account, $date);
+            $sumMinutes = 0;
+            foreach($activities as $activity)
+                $sumMinutes += $activity->getMinutes();
+
+            $sumTotalMinutes += $sumMinutes;
+
+            $days[$i] = array(
+                'date' => $date,
+                'activities' => $activities,
+                'sumMinutes' => $sumMinutes
+            );
+        }
+        $this->view->assign('days', $days);
+        $this->view->assign('istMinutes', $sumTotalMinutes);
+
+        //\TYPO3\FLOW3\var_dump($days);die();
+
+        /**************************** Sidebar ****************************/
+        // Calculate soll working hours
+        $sollMinutes = $this->helper->getEmployeeWorkingMinutes($account->getParty(), $date1, $date2);
 
         $this->view->assign('sollMinutes', $sollMinutes);
 
@@ -86,8 +120,7 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
             $percentage = round(100-((($sollMinutes-$sumMinutes)/$sollMinutes)*100), 2);
 
         $this->view->assign('percentageMinutes', $percentage);
-        $this->view->assign('weekdays', $date2->diff($date1)->days+1);
-        $this->view->assign('activities', $activities);
+        $this->view->assign('weekdays', $weekdays);
 
         $this->view->assign('dateFrom', $this->helper->formatDate($date1));
         $this->view->assign('dateTo', $this->helper->formatDate($date2));

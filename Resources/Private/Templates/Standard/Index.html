@@ -75,15 +75,13 @@
         <div class="span10">
             <script type="text/javascript">
                 $(document).ready(function(){
-                    $(document).ready(function(){
-                        $("img[rel=popover]")
-                            .popover({
-                              offset: 10
-                            })
-                            .click(function(e) {
-                              e.preventDefault()
-                            })
-                    });
+                    $("img[rel=popover]")
+                        .popover({
+                          offset: 10
+                        })
+                        .click(function(e) {
+                          e.preventDefault()
+                        });
 
                     $("input#timespan").typeWatch({
                         callback: function(){
@@ -218,13 +216,15 @@
                             },
                             success: function(data) {
                                 if(data.comment.length != 0) {
-                                    $("span#taskDetails").html('Hinweis zu dieser Aufgabe');
-                                    $('span#taskDetails').popover({
-                                        'title': 'Hinweis für diese Aufgabe',
-                                        'content': data['comment']
+                                    //$("img#taskComment").html('Hinweis zu dieser Aufgabe');
+                                    $('img#taskComment').css('visibility', 'visible');
+                                    $('img#taskComment').popover({
+                                        title: function(){ return 'Hinweis für diese Aufgabe'; },
+                                        content: function(){ return data.comment; },
+                                        placement: 'left'
                                     });
                                 } else {
-                                    $("span#taskDetails").html('');
+                                    $('img#taskComment').css('visibility', 'hidden');
                                 }
                             }
                         });
@@ -250,7 +250,8 @@
                     <label>Benötigte Zeit</label>
                     <div class="input">
                         <div class="inline-inputs">
-                            <input class="span3 required timespanValidator" type="text" value="" id="timespan" name="timespan"  /><img src="{f:uri.resource(path: 'icons/help.png')}" rel="popover" data-content="formate" data-original-title="Was kann ich hier eingeben?" />
+                            <input class="span3 required timespanValidator" type="text" value="" id="timespan" name="timespan"  />
+                            <img src="{f:uri.resource(path: 'icons/help.png')}" class="cursor help" rel="popover" data-content="formate" data-original-title="Was kann ich hier eingeben?" />
                             <span class="span6 help-block" id="timespanOutput">Bitte Dauer eingeben</span>
                             <f:form.hidden property="minutes" id="timespanTotal" value="0" />
                         </div>
@@ -279,9 +280,8 @@
                     <label for="task">Aufgabe</label>
                     <div class="input">
                         <f:form.select class="span6" property="task" options="{tasks}" name="task" optionLabelField="name" id="task" />
-                        <span class="span6 help-block" id="taskDetails">
-                            
-                        </span>
+                        <img src="{f:uri.resource(path: 'icons/information.png')}" class="cursor help" style="visibility: hidden;" id="taskComment" />
+
                     </div>
                 </div>
                 <div class="clearfix">

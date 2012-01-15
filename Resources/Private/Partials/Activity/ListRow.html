@@ -1,0 +1,105 @@
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<tr>
+    <td><ts:format.timespan>{activity.minutes}</ts:format.timespan></td>
+    <td>
+        <f:if condition="{activity.project.code}">
+            <f:then>
+                <span class="label notice" rel="popover" data-content="Kunde: {activity.project.customer.name.fullName} ({activity.project.customer.code})" data-original-title="{activity.project.name} ({activity.project.code})">{activity.project.code}</span>
+            </f:then>
+            <f:else>
+                <span class="label notice" rel="popover" data-content="Kunde: {activity.project.customer.name.fullName} ({activity.project.customer.code})" data-original-title="{activity.project.name}">[Details]</span>
+            </f:else>
+        </f:if>
+    </td>
+    <td>{activity.task.name}</td>
+    <td>
+        <f:if condition="{activity.comment}">
+            <f:then>
+                <span class="label success" rel="popover" data-content="{activity.comment}" data-original-title="Kommentar">Ja</span>
+            </f:then>
+            <f:else>
+                <span class="label">Nein</span>
+            </f:else>
+        </f:if>
+    </td>
+    <td>
+        <!-- Löschen Dialog -->
+        <div id="modal-confirm-delete" class="modal hide fade">
+            <div class="modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3>Tätigkeit wirklich löschen?</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie trotzdem fortfahren?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <f:link.action class="btn danger" action="delete" arguments="{activity: activity}" controller="Activity">
+                    Ja, löschen
+                </f:link.action>
+            </div>
+        </div>
+
+        <button data-controls-modal="modal-confirm-delete" data-backdrop="true" data-keyboard="true" class="btn xsmall danger">löschen</button>
+
+        <!--
+        <div id="modal-details-{activity.identifier}" class="modal hide fade">
+            <div class="modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3>Details der Zeiterfassung</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div class="row">
+                        <div class="span2">
+                            <strong>Mitarbeiter:</strong>
+                        </div>
+                        <div class="span4">
+                            {activity.account.party.name.fullName}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span2">
+                            <strong>Datum:</strong>
+                        </div>
+                        <div class="span4">
+                            <f:format.date format="d.m.Y">{activity.date}</f:format.date>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span2">
+                            <strong>Dauer:</strong>
+                        </div>
+                        <div class="span4">
+                            <ts:format.timespan>{activity.minutes}</ts:format.timespan>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span2">
+                            <strong>Kategorie:</strong>
+                        </div>
+                        <div class="span4">
+                            {activity.category.title}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span2">
+                            <strong>Kommentar:</strong>
+                        </div>
+                        <div class="span4">
+                            {activity.comment}
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn primary click">Schließen</button>
+            </div>
+        </div>
+
+        <button data-controls-modal="modal-details-{activity.identifier}" data-backdrop="ghjk" data-keyboard="true" class="btn small">Details</button>
+    -->
+    </td>
+</tr>

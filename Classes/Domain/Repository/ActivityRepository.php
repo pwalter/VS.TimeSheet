@@ -23,7 +23,7 @@ class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
             )
         )
         ->setOrderings(array(
-                            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
+            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
         )
         ->execute();
     }
@@ -49,7 +49,7 @@ class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
             )
         )
         ->setOrderings(array(
-                            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
+            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
         )
         ->execute();
     }
