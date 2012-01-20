@@ -40,12 +40,6 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
     protected $projectRepository;
 
     /**
-     * @FLOW3\Inject
-     * @var VS\TimeSheet\Core\Helper
-     */
-    protected $helper;
-
-    /**
      * @param string $dateFrom
      * @param string $dateTo
      * @return void
@@ -188,7 +182,9 @@ LABEL
      * @return void
      */
     public function deleteAction(\VS\TimeSheet\Domain\Model\Activity $activity) {
-        $this->activityRepository->remove($activity);
+        $activity->setDeleted(TRUE);
+
+        $this->activityRepository->update($activity);
         $this->addFlashMessage('Tätigkeit wurde erfolgreich gelöscht');
         $this->redirect('list');
     }

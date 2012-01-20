@@ -48,6 +48,11 @@ class Activity {
     protected $comment;
 
     /**
+     * @var boolean
+     */
+    protected $deleted;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<\VS\TimeSheet\Domain\Model\Tag>
      * @ORM\ManyToMany
      */
@@ -57,6 +62,8 @@ class Activity {
         $this->date = new \DateTime();
         $this->comment = '';
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->deleted = FALSE;
     }
 
     /**
@@ -160,5 +167,21 @@ class Activity {
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * @param boolean $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 }

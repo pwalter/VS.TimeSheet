@@ -37,6 +37,12 @@ class Task {
     protected $comment;
 
     /**
+     * @var string
+     * @ORM\Column(length=50)
+     */
+    protected $color;
+
+    /**
      * @var \VS\TimeSheet\Domain\Model\Project
      * @ORM\ManyToOne(inversedBy="tasks")
      */
@@ -165,5 +171,21 @@ class Task {
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 }

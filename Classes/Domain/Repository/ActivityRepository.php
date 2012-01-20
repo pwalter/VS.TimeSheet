@@ -8,9 +8,16 @@ use TYPO3\FLOW3\Annotations as FLOW3;
 class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
     public function findByAccount(\TYPO3\FLOW3\Security\Account $account) {
         $query = $this->createQuery();
-        return $query->matching($query->equals('account', $account))
-                ->setOrderings(array('date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING))
-                ->execute();
+        return $query->matching(
+            $query->logicalAnd(
+                $query->equals('account', $account),
+                $query->equals('deleted', FALSE)
+            )
+        )
+        ->setOrderings(array(
+            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
+        )
+        ->execute();
     }
 
     public function findBetweenDates(\TYPO3\FLOW3\Security\Account $account, \DateTime $after, \DateTime $before) {
@@ -18,6 +25,7 @@ class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
         return $query->matching(
             $query->logicalAnd(
                 $query->equals('account', $account),
+                $query->equals('deleted', FALSE),
                 $query->greaterThanOrEqual('date', $after),
                 $query->lessThanOrEqual('date', $before)
             )
@@ -44,6 +52,39 @@ class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
         return $query->matching(
             $query->logicalAnd(
                 $query->equals('account', $account),
+                $query->equals('deleted', FALSE),
+                $query->greaterThanOrEqual('date', $after),
+                $query->lessThanOrEqual('date', $before)
+            )
+        )
+        ->setOrderings(array(
+            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
+        )
+        ->execute();
+    }
+
+    public function findAllByProject(\VS\TimeSheet\Domain\Model\Project $project, \DateTime $after, \DateTime $before) {
+        $query = $this->createQuery();
+        return $query->matching(
+            $query->logicalAnd(
+                $query->equals('task.project', $project),
+                $query->equals('deleted', FALSE),
+                $query->greaterThanOrEqual('date', $after),
+                $query->lessThanOrEqual('date', $before)
+            )
+        )
+        ->setOrderings(array(
+            'date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING)
+        )
+        ->execute();
+    }
+
+    public function findAllByTask(\VS\TimeSheet\Domain\Model\Task $task, \DateTime $after, \DateTime $before) {
+        $query = $this->createQuery();
+        return $query->matching(
+            $query->logicalAnd(
+                $query->equals('task', $task),
+                $query->equals('deleted', FALSE),
                 $query->greaterThanOrEqual('date', $after),
                 $query->lessThanOrEqual('date', $before)
             )

@@ -29,6 +29,12 @@ class Project {
     protected $code;
 
     /**
+     * @var string
+     * @ORM\Column(length=50)
+     */
+    protected $color;
+
+    /**
      * @var \VS\TimeSheet\Domain\Model\Customer
      * @FLOW3\Validate(type="NotEmpty")
      * @ORM\ManyToOne(inversedBy="projects")
@@ -166,5 +172,21 @@ class Project {
     public function getNumber()
     {
         return $this->number;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 }

@@ -3,6 +3,9 @@ namespace VS\TimeSheet\Core;
 
 use TYPO3\FLOW3\Annotations as FLOW3;
 
+/**
+ * @FLOW3\Scope("singleton")
+ */
 class Helper {
 	/**
 	 * @FLOW3\Inject
@@ -178,6 +181,15 @@ class Helper {
         }
 
         return $minutes;
+    }
+
+    public function randomColor() {
+        mt_srand((double)microtime()*1000000);
+        $c = '#';
+        while(strlen($c)<6){
+            $c .= sprintf("%02X", mt_rand(0, 255));
+        }
+        return $c;
     }
 }
 

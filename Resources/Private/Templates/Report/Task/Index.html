@@ -1,0 +1,115 @@
+<f:layout name="Master" />
+
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<f:section name="header">
+    <h1>Schnellauswertung: Aufgaben</h1>
+</f:section>
+
+<f:section name="content">
+    <div class="row">
+        <div class="span4">
+            <h3>Auswahl</h3>
+            <table class="condensed-table">
+                <tbody>
+                    <tr>
+                        <td>Kunde:</td>
+                        <td>
+                            <f:if condition="{customer}">
+                                <f:then>
+                                    {customer.name.fullName}
+                                </f:then>
+                                <f:else>
+                                    <i>keine Einschränkung</i>
+                                </f:else>
+                            </f:if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Projekt:</td>
+                        <td>
+                            <f:if condition="{project}">
+                                <f:then>
+                                    <f:if condition="{project.code}">
+                                        <f:then>
+                                            <span class="label notice" rel="popover" data-content="Kunde: {project.customer.name.fullName} ({project.customer.code})" data-original-title="{project.name} ({project.code})">{project.code}</span>
+                                        </f:then>
+                                        <f:else>
+                                            <span class="label notice" rel="popover" data-content="Kunde: {project.customer.name.fullName} ({project.customer.code})" data-original-title="{project.name}">[Details]</span>
+                                        </f:else>
+                                    </f:if>
+                                </f:then>
+                                <f:else>
+                                    <i>keine Einschränkung</i>
+                                </f:else>
+                            </f:if>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span10">
+            <div id="donutPie" style="width: 550px; height: 400px; margin: 0 auto"></div>
+            <script type="text/javascript">
+                var donutPie;
+
+                function generateChart(data) {
+                    donutPie = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'donutPie',
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Dauer je Aufgabe'
+                        },
+                        plotOptions: {
+                            pie: {
+                                shadow: false
+                            }
+                        },
+                        tooltip: {
+                            formatter: function() {
+                                return '<b>'+ this.point.name +'</b>:' + this.point.y + ' Stunden';
+                            }
+                        },
+                        series: [{
+                            name: 'Projekt',
+                            data: data.projects,
+                            size: '30%',
+                            dataLabels: {
+                                formatter: function() {
+                                    return this.point.name;
+                                },
+                                color: 'white',
+                                distance: -100
+                            }
+                        }, {
+                            name: 'Task',
+                            data: data.tasks,
+                            innerSize: '30%',
+                            size: '60%',
+                            dataLabels: {
+                                formatter: function() {
+                                    // display only if larger than 1
+                                    return '<b>'+ this.point.name +'</b>';
+                                }
+                            }
+                        }]
+                    });
+                }
+
+                $(document).ready(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '<f:uri.action action="getTaskChartData" controller="ReportTask" subpackage="Json" />',
+                        success: function(data) {
+                            console.log(data);
+                            generateChart(data);
+                        }
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+</f:section>

@@ -5,11 +5,11 @@
 <ul class="nav">
     <li><f:link.action controller="Standard">Erfassen</f:link.action></li>
     <li class_="active"><f:link.action controller="Activity" action="list">Zeitkonto</f:link.action></li>
-    <f:security.ifHasRole role="Administrator">
+    <f:security.ifHasRole role="Report">
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle">Testbereich</a>
+        <a href="#" class="dropdown-toggle">Auswertung</a>
         <ul class="dropdown-menu">
-            <li><f:link.action controller="Activity" action="create">Schnellerfassung</f:link.action></li>
+            <li><f:link.action controller="Report\Task">Aufgaben</f:link.action></li>
         </ul>
     </li>
     </f:security.ifHasRole>

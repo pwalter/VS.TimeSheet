@@ -62,6 +62,15 @@
     '@action':     'index'
     '@format':     'html'
 
+-
+  name: 'Report Task'
+  uriPattern: 'report/task(/{@action})'
+  defaults:
+    '@package':    'VS.TimeSheet'
+    '@controller': 'Report\Task'
+    '@action':     'index'
+    '@format':     'html'
+
 #-
 #  name: 'Generic Admin Routes 2'
 #  uriPattern: 'admin/{@controller}(/{@action})'

@@ -13,8 +13,9 @@
 #    VS_TimeSheet_Controller_AccountControllerMethods: 'method(VS\TimeSheet\Controller\AccountController->.*profileAction())'
 roles:
   Employee: []
+  Report: []
   Management: [Employee]
-  Administrator: [Management]
+  Administrator: [Management,Report]
 #acls:
 #  Administrator:
 #    methods:

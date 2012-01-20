@@ -100,11 +100,60 @@ html body .container > .content .progressbar > div.text {
   top: -17px;
   text-shadow: white 0px 1px 2px, white 0px -1px 2px, white -1px 0px 2px, white 2px 0px 2px;
 }
-/* line 92, ../sass/site.scss */
+/* line 2, ../sass/widget/_colorpicker.scss */
+html body .container > .content .colorpicker input {
+  -webkit-transition: border linear 0.0s, box-shadow linear 0.0s;
+  -moz-transition: border linear 0.0s, box-shadow linear 0.0s;
+  -ms-transition: border linear 0.0s, box-shadow linear 0.0s;
+  -o-transition: border linear 0.0s, box-shadow linear 0.0s;
+  transition: border linear 0.0s, box-shadow linear 0.0s;
+  line-height: normal;
+  width: none;
+}
+/* line 11, ../sass/widget/_colorpicker.scss */
+html body .container > .content .colorpicker input:focus {
+  outline: default;
+  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+/* line 93, ../sass/site.scss */
 html body .container span.label {
   cursor: default;
 }
-/* line 96, ../sass/site.scss */
+/* line 97, ../sass/site.scss */
 html body .container > footer p {
+  text-align: center;
+}
+/* line 102, ../sass/site.scss */
+html body > div.overlayOuter {
+  -moz-transition-property: background;
+  -webkit-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -moz-transition-duration: 1;
+  -webkit-transition-duration: 1;
+  -o-transition-duration: 1;
+  transition-duration: 1;
+  background-image: url(../images/bg_white.png);
+  background-position: 45% 40%;
+  background-repeat: no-repeat;
+  opacity: 10;
+  display: none;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100001;
+}
+/* line 118, ../sass/site.scss */
+html body > div.overlayOuter .overlayInner {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  width: 200px;
+  z-index: 100001;
+  color: black;
   text-align: center;
 }

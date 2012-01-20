@@ -51,7 +51,10 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
 	 * @return void
 	 */
 	public function indexAction() {
-		$this->view->assign('accounts', $this->accountRepository->findAll());
+        $accounts = $this->accountRepository->findAll();
+
+		$this->view->assign('accounts', $accounts);
+
 	}
 
     public function newAction() {
@@ -96,12 +99,21 @@ class AccountController extends \VS\TimeSheet\MVC\Controller\BasicController {
     public function editAction(\TYPO3\FLOW3\Security\Account $account) {
         $this->view->assign('account', $account);
 
+        $employee = $account->getParty();
+
         $selectedRoles = array();
         foreach($account->getRoles() as $role)
             $selectedRoles[] = (string)$role;
         $this->view->assign('selectedRoles', $selectedRoles);
 
-        //\TYPO3\FLOW3\var_dump($selectedRoles);
+        // Wochenarbeitszeit berechnen
+        $weekdays = $this->helper->getSettings('VS.TimeSheet.weekdays');
+        $sumMinutes = 0;
+        foreach($weekdays as $key => $value) {
+            $property = 'getMinutes'.ucfirst($key);
+            $sumMinutes += $employee->$property();
+        }
+        $this->view->assign('weekHours', $sumMinutes);
 
         $roles = array();
         foreach($this->policyService->getRoles() as $role) {

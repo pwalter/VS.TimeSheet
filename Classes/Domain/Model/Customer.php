@@ -30,6 +30,12 @@ class Customer {
 	 */
 	protected $name;
 
+    /**
+     * @var string
+     * @ORM\Column(length=50)
+     */
+    protected $color;
+
 	/**
 	 * @var \Doctrine\Common\Collections\Collection<\TYPO3\Party\Domain\Model\ElectronicAddress>
 	 * @ORM\ManyToMany
@@ -143,5 +149,21 @@ class Customer {
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 }

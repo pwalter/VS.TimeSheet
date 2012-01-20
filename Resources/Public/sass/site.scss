@@ -87,6 +87,7 @@ html {
 
                 @import "table";
                 @import "widget/progressbar";
+                @import "widget/colorpicker";
             }
 
             span.label {
@@ -95,6 +96,34 @@ html {
 
             > footer p {
                 text-align: center;
+            }
+        }
+
+        > div.overlayOuter {
+            @include single-transition(background, 1.0);
+            background: {
+                image: url(../images/bg_white.png);
+                position: 45% 40%;
+                repeat: no-repeat;
+            }
+            opacity:10;
+            display:none;
+            height:100%;
+            left:0;
+            position:absolute;
+            top:0;
+            width:100%;
+            z-index:100001;
+
+            .overlayInner {
+                position:absolute;
+                top:40%;
+                left:40%;
+                width:200px;
+                z-index:100001;
+                color: black;
+                text-align: center;
+
             }
         }
     }
