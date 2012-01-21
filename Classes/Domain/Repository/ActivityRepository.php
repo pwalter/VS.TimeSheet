@@ -6,6 +6,12 @@ use TYPO3\FLOW3\Annotations as FLOW3;
  * @FLOW3\Scope("singleton")
  */
 class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
+    public function __construct() {
+        parent::__construct();
+
+        $this->setDefaultOrderings(array('date' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_DESCENDING));
+    }
+
     public function findByAccount(\TYPO3\FLOW3\Security\Account $account) {
         $query = $this->createQuery();
         return $query->matching(
@@ -79,14 +85,23 @@ class ActivityRepository extends \TYPO3\FLOW3\Persistence\Repository {
         ->execute();
     }
 
-    public function findAllByTask(\VS\TimeSheet\Domain\Model\Task $task, \DateTime $after, \DateTime $before) {
+    public function findAllByTask(\VS\TimeSheet\Domain\Model\Task $task, $account, \DateTime $after, \DateTime $before) {
         $query = $this->createQuery();
+
+        $ands = array(
+            $query->equals('task', $task),
+            $query->equals('deleted', FALSE),
+            $query->greaterThanOrEqual('date', $after),
+            $query->lessThanOrEqual('date', $before)
+        );
+
+        if(!is_null($account))
+            $ands[] = $query->equals('account', $account);
+
+
         return $query->matching(
             $query->logicalAnd(
-                $query->equals('task', $task),
-                $query->equals('deleted', FALSE),
-                $query->greaterThanOrEqual('date', $after),
-                $query->lessThanOrEqual('date', $before)
+                $ands
             )
         )
         ->setOrderings(array(

@@ -63,7 +63,7 @@
                 <tbody>
                     <f:for each="{tasks}" as="task">
                     <tr>
-                        <td>{task.code}</td>
+                        <td style="background-color: {task.color}">{task.code}</td>
                         <td><b>{task.name}</b></td>
                         <td>
                             <f:if condition="{task.project.code}">

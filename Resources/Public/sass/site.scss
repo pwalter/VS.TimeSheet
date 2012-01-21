@@ -22,6 +22,9 @@ html {
                 color: $color_hdh_blue;
             }
         }
+
+        @import "widget/colorpicker";
+
         /*
         .topbar div > ul .menu-dropdown,
         .nav .menu-dropdown,
@@ -87,7 +90,6 @@ html {
 
                 @import "table";
                 @import "widget/progressbar";
-                @import "widget/colorpicker";
             }
 
             span.label {

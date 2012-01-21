@@ -93,7 +93,8 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
             $days[$i] = array(
                 'date' => $date,
                 'activities' => $activities,
-                'sumMinutes' => $sumMinutes
+                'sumMinutes' => $sumMinutes,
+                'sollMinutes' => $this->helper->getEmployeeWorkingMinutesByDate($account->getParty(), $date)
             );
         }
         $this->view->assign('days', $days);

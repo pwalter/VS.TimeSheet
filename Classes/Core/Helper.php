@@ -51,18 +51,28 @@ class Helper {
      * @param string $text
      * @return array
      */
-    public function appendOptional($array, $value = null, $text = '--- Bitte wählen ---') {
+    public function appendOptional($array, $value = '', $text = '--- Bitte wählen ---') {
         if(!is_array($array))
             $array = $array->toArray();
 
         return array_merge(array($value => $text), $array);
     }
 
-    public function formatDate(\DateTime $date, $format = null) {
-        $weekday = lcfirst($date->format('l'));
-        $weekdays = $this->getSettings('VS.TimeSheet.weekdays');
+    public function formatDate(\DateTime $date, $format = NULL) {
 
-        return $weekdays[$weekday].', '.$date->format('d.m.Y');
+
+        if(is_null($format)) {
+            $format = $this->getSettings('VS.TimeSheet.formats.dateTime.default');
+        }
+
+        if(strpos($format, 'l') != false) {
+            $weekday = lcfirst($date->format('l'));
+            $weekdays = $this->getSettings('VS.TimeSheet.weekdays');
+
+            $format = preg_replace('|l|', $weekdays[$weekday], $format);
+        }
+
+        return $date->format($format);
     }
 
     /**
@@ -181,15 +191,6 @@ class Helper {
         }
 
         return $minutes;
-    }
-
-    public function randomColor() {
-        mt_srand((double)microtime()*1000000);
-        $c = '#';
-        while(strlen($c)<6){
-            $c .= sprintf("%02X", mt_rand(0, 255));
-        }
-        return $c;
     }
 }
 

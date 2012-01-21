@@ -37,7 +37,7 @@
                 </tbody>
             </table>
             <span class="pull-right">
-                <a href="#" data-controls-modal="modal-filter" data-backdrop="true" data-keyboard="true">Auswahl ändern</a>
+                <a href="#" data-controls-modal="modal-filter" class="btn xsmall" data-backdrop="true" data-keyboard="true">Auswahl ändern</a>
             </span>
             <f:render partial="Activity/ListFilterDialog" arguments="{filter: filter}"/>
             <br />
@@ -95,7 +95,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td>&#8721; <ts:format.timespan>{day.sumMinutes}</ts:format.timespan></td>
+                                <td>&#8721; <ts:format.timespan>{day.sumMinutes}</ts:format.timespan> (SOLL <ts:format.timespan>{day.sollMinutes}</ts:format.timespan>)</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

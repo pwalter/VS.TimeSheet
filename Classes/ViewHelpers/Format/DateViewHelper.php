@@ -15,7 +15,7 @@ use TYPO3\FLOW3\Annotations as FLOW3;
 class DateViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
 
     /**
-	 * @var VS\TimeSheet\Core\Helper
+	 * @var \VS\TimeSheet\Core\Helper
 	 * @FLOW3\Inject
 	 */
 	protected $helper;

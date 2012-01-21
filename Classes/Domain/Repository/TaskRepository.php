@@ -7,6 +7,12 @@ use TYPO3\FLOW3\Annotations as FLOW3;
  */
 class TaskRepository extends \TYPO3\FLOW3\Persistence\Repository {
 
+    public function __construct() {
+        parent::__construct();
+
+        $this->setDefaultOrderings(array('name' => \TYPO3\FLOW3\Persistence\QueryInterface::ORDER_ASCENDING));
+    }
+
     public function findAllExceptThis(\VS\TimeSheet\Domain\Model\Task $task) {
         $query = $this->createQuery();
         $tasks = $query

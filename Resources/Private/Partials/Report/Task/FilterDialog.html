@@ -1,0 +1,65 @@
+{namespace ts=VS\TimeSheet\ViewHelpers}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#dateFrom').mask("99.99.9999",{placeholder:"_"});
+        $('#dateTo').mask("99.99.9999",{placeholder:"_"});
+
+        $('#frmFilter').validate({
+            errorClass:'error',
+            validClass:'success',
+            errorElement:'span',
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents("div[class='clearfix']").addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".error").removeClass(errorClass).addClass(validClass);
+            }
+        });
+    });
+</script>
+
+<div id="modal-filter" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Auswahl ändern</h3>
+    </div>
+    <div class="modal-body">
+        <f:form id="frmFilter" action="filter" method="post">
+            <div class="clearfix">
+                <label>Zeitraum von</label>
+                <div class="input">
+                    <div class="inline-inputs">
+                        <f:form.textfield class="small" type="text" name="dateFrom" value="{filter.dateFrom -> f:format.date(format: 'd.m.Y')}" id="dateFrom" />
+                        <span class="span6 help-block">Beispiel: 01.12.2012</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>Zeitraum bis</label>
+                <div class="input">
+                    <div class="inline-inputs">
+                        <f:form.textfield class="small" type="text" name="dateTo" value="{filter.dateTo -> f:format.date(format: 'd.m.Y')}" id="dateTo" />
+                        <span class="span6 help-block">Beispiel: 01.12.2012</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>Mitarbeiter</label>
+                <div class="input">
+                    <div class="inline-inputs">
+                        <f:form.select class="span6" name="account" options="{accounts}" optionLabelField="party.name.fullName" value="{filter.account}" id="account" />
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="input">
+                    <input type="submit" class="btn primary" value="Auswahl anzeigen">
+                    <f:link.action action="filterReset" controller="Report\Task">
+                        Zurücksetzen
+                    </f:link.action>
+                </div>
+            </div>
+        </f:form>
+    </div>
+</div>

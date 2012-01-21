@@ -40,11 +40,28 @@ html body .topbar .fill {
   background-image: url(../images/noise/130-90-4.png);
   background-color: #00569f;
 }
-/* line 51, ../sass/site.scss */
+/* line 2, ../sass/widget/_colorpicker.scss */
+html body div.colorpicker input[type=text] {
+  -webkit-transition: border linear 0.0s, box-shadow linear 0.0s;
+  -moz-transition: border linear 0.0s, box-shadow linear 0.0s;
+  -ms-transition: border linear 0.0s, box-shadow linear 0.0s;
+  -o-transition: border linear 0.0s, box-shadow linear 0.0s;
+  transition: border linear 0.0s, box-shadow linear 0.0s;
+  line-height: normal;
+  width: 50px;
+}
+/* line 11, ../sass/widget/_colorpicker.scss */
+html body div.colorpicker input[type=text]:focus {
+  outline: default;
+  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+/* line 54, ../sass/site.scss */
 html body .container {
   width: 820px;
 }
-/* line 54, ../sass/site.scss */
+/* line 57, ../sass/site.scss */
 html body .container > .content {
   background-color: #fff;
   padding: 20px;
@@ -57,22 +74,22 @@ html body .container > .content {
   -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
-/* line 65, ../sass/site.scss */
+/* line 68, ../sass/site.scss */
 html body .container > .content .page-header {
   background-color: #f5f5f5;
   padding: 20px 20px 10px;
   margin: -20px -20px 20px;
 }
-/* line 73, ../sass/site.scss */
+/* line 76, ../sass/site.scss */
 html body .container > .content .btn.xsmall {
   padding: 3px 3px 3px;
   font-size: 10px;
 }
-/* line 79, ../sass/site.scss */
+/* line 82, ../sass/site.scss */
 html body .container > .content .cursor.pointer {
   cursor: pointer;
 }
-/* line 83, ../sass/site.scss */
+/* line 86, ../sass/site.scss */
 html body .container > .content .cursor.help {
   cursor: help;
 }
@@ -100,32 +117,15 @@ html body .container > .content .progressbar > div.text {
   top: -17px;
   text-shadow: white 0px 1px 2px, white 0px -1px 2px, white -1px 0px 2px, white 2px 0px 2px;
 }
-/* line 2, ../sass/widget/_colorpicker.scss */
-html body .container > .content .colorpicker input {
-  -webkit-transition: border linear 0.0s, box-shadow linear 0.0s;
-  -moz-transition: border linear 0.0s, box-shadow linear 0.0s;
-  -ms-transition: border linear 0.0s, box-shadow linear 0.0s;
-  -o-transition: border linear 0.0s, box-shadow linear 0.0s;
-  transition: border linear 0.0s, box-shadow linear 0.0s;
-  line-height: normal;
-  width: none;
-}
-/* line 11, ../sass/widget/_colorpicker.scss */
-html body .container > .content .colorpicker input:focus {
-  outline: default;
-  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
-}
-/* line 93, ../sass/site.scss */
+/* line 95, ../sass/site.scss */
 html body .container span.label {
   cursor: default;
 }
-/* line 97, ../sass/site.scss */
+/* line 99, ../sass/site.scss */
 html body .container > footer p {
   text-align: center;
 }
-/* line 102, ../sass/site.scss */
+/* line 104, ../sass/site.scss */
 html body > div.overlayOuter {
   -moz-transition-property: background;
   -webkit-transition-property: background;
@@ -147,7 +147,7 @@ html body > div.overlayOuter {
   width: 100%;
   z-index: 100001;
 }
-/* line 118, ../sass/site.scss */
+/* line 120, ../sass/site.scss */
 html body > div.overlayOuter .overlayInner {
   position: absolute;
   top: 40%;

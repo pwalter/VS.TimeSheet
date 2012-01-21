@@ -34,15 +34,16 @@ class ReportTaskController extends \VS\TimeSheet\MVC\Controller\BasicJsonControl
     protected $sorter;
 
     /**
+     * @FLOW3\Inject
+     * @var \VS\TimeSheet\Session\ReportFilterSession
+     */
+    protected $filterSession;
+
+    /**
      * @return void
      */
     public function getTaskChartDataAction() {
         $allProjects = $this->projectRepository->findAll();
-
-        $from = new \DateTime();
-        $from->modify('-7 days');
-
-        $to = new \DateTime();
 
         $projects = array();
         $tasks = array();
@@ -51,42 +52,58 @@ class ReportTaskController extends \VS\TimeSheet\MVC\Controller\BasicJsonControl
             $projectTasks = array();
 
             // Add task
-            $sumOthers = 0.0;
             foreach($project->getTasks() as $task) {
-                $activities = $this->activityRepository->findAllByTask($task, $from, $to);
+                $activities = $this->activityRepository->findAllByTask(
+                    $task,
+                    $this->filterSession->getAccount(),
+                    $this->filterSession->getDateFrom(),
+                    $this->filterSession->getDateTo());
                 $hours = 0.0;
                 foreach($activities as $activity)
                     $hours += $activity->getMinutes() / 60;
 
-                $hoursProject += $hours;
+                if($hours == 0.0)
+                    continue;
 
-                if($hours > 3) {
-                    $projectTasks[] = array(
-                        'name' => $task->getName(),
-                        'code' => $task->getCode(),
-                        'y' => (int)$hours,
-                        'color' => $task->getColor()
-                    );
-                } else {
-                    $sumOthers += $hours;
-                }
+                $hoursProject += $hours;
+                $projectTasks[] = array(
+                    'name' => $task->getName(),
+                    'code' => $task->getCode(),
+                    'y' => (int)$hours,
+                    'color' => $task->getColor() == '' ? \VS\TimeSheet\Core\ColorGenerator::randomLightGray() : $task->getColor()
+                );
             }
 
-            $projectTasks[] = array(
-                'name' => 'Sonstige',
-                'code' => 'sont',
-                'y' => (int)$sumOthers,
-                'color' => '#ffffff'
-            );
+            $projectTasksResult = array(); // Reset
+            $threshold = is_null($this->filterSession->getAccount()) ? 3 : 0.5;
+            $sumOtherHours = 0.0;
+            foreach($projectTasks as $projectTask) {
+                if($projectTask['y'] >= $threshold)
+                    $projectTasksResult[] = $projectTask;
+                else
+                    $sumOtherHours += $projectTask['y'];
+            }
 
-            $tasks = array_merge($tasks, $this->sorter->sort($projectTasks, 'y'));
+            if($sumOtherHours > 0){
+                $projectTasksResult[] = array(
+                    'name' => 'Sonstige',
+                    'code' => 'SONST',
+                    'y' => (int)$sumOtherHours,
+                    'color' => '#e8e8e8'
+                );
+            }
+
+            $tasks = array_merge($tasks, $this->sorter->sort($projectTasksResult, 'y'));
+
+            if($hoursProject == 0.0)
+                continue;
 
             // Add project data
             $projects[] = array(
                 'name' => $project->getName(),
                 'code' => $project->getCode(),
                 'y' => (int)$hoursProject,
-                'color' => $project->getColor()
+                'color' => $project->getColor() == '' ? \VS\TimeSheet\Core\ColorGenerator::randomLightGray() : $project->getColor()
             );
 
             //$tasks = $this->sorter->sort($tasks, 'y');

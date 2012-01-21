@@ -3,32 +3,39 @@
 {namespace ts=VS\TimeSheet\ViewHelpers}
 
 <f:section name="header">
-
-    <f:if condition="{ts:Condition.RemoteAddress(setting:'HdH')}">
+    <f:security.ifAuthenticated>
         <f:then>
-            <f:security.ifAuthenticated>
-                <f:then>
-                    <h1>Erfassen für <ts:account property="fullName" /></h1>
-                </f:then>
-                <f:else>
-                    <h1>Schnellerfassung</h1>
-                </f:else>
-            </f:security.ifAuthenticated>
+            <h1>Erfassen für <ts:account property="fullName" /></h1>
         </f:then>
         <f:else>
-            <h1>TimeSheet | Willkommen</h1>
+            <f:if condition="{ts:Condition.RemoteAddress(setting:'HdH')}">
+                <f:then>
+                    <h1>Schnellerfassung</h1>
+                </f:then>
+                <f:else>
+                    <h1>TimeSheet | Willkommen</h1>
+                </f:else>
+            </f:if>
         </f:else>
-    </f:if>
+    </f:security.ifAuthenticated>
 </f:section>
 
 
 <f:section name="content">
-    <f:if condition="{ts:Condition.RemoteAddress(setting:'HdH')}">
+
+    <f:security.ifAuthenticated>
         <f:then>
             <f:render partial="Standard/IndexIntranet" arguments="{_all}"/>
         </f:then>
         <f:else>
-            <f:render partial="Standard/IndexExtranet"/>
+            <f:if condition="{ts:Condition.RemoteAddress(setting:'HdH')}">
+                <f:then>
+                    <f:render partial="Standard/IndexIntranet" arguments="{_all}"/>
+                </f:then>
+                <f:else>
+                    <f:render partial="Standard/IndexExtranet"/>
+                </f:else>
+            </f:if>
         </f:else>
-    </f:if>
+    </f:security.ifAuthenticated>
 </f:section>

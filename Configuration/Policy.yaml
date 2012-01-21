@@ -6,21 +6,25 @@
 
 # @version $Id: Policy.yaml 3886 2010-02-28 17:03:50Z robert $
 
-#resources:
-#  methods:
-#    VS_TimeSheet_Controller_AdminControllers: 'class(VS\TimeSheet\Controller\ManageController)'
-#    VS_TimeSheet_Controller_EmployeeControllers: 'class(VS\TimeSheet\Controller\ActivityController)'
-#    VS_TimeSheet_Controller_AccountControllerMethods: 'method(VS\TimeSheet\Controller\AccountController->.*profileAction())'
+resources:
+  methods:
+    VS_TimeSheet_Controller_AdminControllers: 'class(VS\TimeSheet\Controller\ManageController)'
+    VS_TimeSheet_Controller_EmployeeControllers: 'class(VS\TimeSheet\Controller\ActivityController)'
+    VS_TimeSheet_Controller_Report_TaskControllers: 'class(VS\TimeSheet\Controller\Report\TaskController)'
+    VS_TimeSheet_Controller_AccountControllerMethods: 'method(VS\TimeSheet\Controller\AccountController->.*profileAction())'
 roles:
   Employee: []
   Report: []
   Management: [Employee]
   Administrator: [Management,Report]
-#acls:
-#  Administrator:
-#    methods:
-#      VS_TimeSheet_Controller_AdminControllers: GRANT
-#      VS_TimeSheet_Controller_AccountControllerMethods: GRANT
-#  Employee:
-#    methods:
-#      VS_TimeSheet_Controller_EmployeeControllers: GRANT
+acls:
+  Administrator:
+    methods:
+      VS_TimeSheet_Controller_AdminControllers: GRANT
+      VS_TimeSheet_Controller_AccountControllerMethods: GRANT
+  Employee:
+    methods:
+      VS_TimeSheet_Controller_EmployeeControllers: GRANT
+  Report:
+    methods:
+      VS_TimeSheet_Controller_Report_TaskControllers: GRANT

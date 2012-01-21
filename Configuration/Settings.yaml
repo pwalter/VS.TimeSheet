@@ -13,11 +13,14 @@ TYPO3:
         # An array of access decision voters that should vote when access decisions are made
         accessDecisionVoters:
           - TYPO3\FLOW3\Security\Authorization\Voter\Policy
+    locale:
+      defaultLocaleIdentifier: de
+      defaultLocale: de
 VS:
   TimeSheet:
     brand: TimeSheet
-    version: "1.0.3"
-    versionDate: "18. Januar 2012"
+    version: "1.0.4"
+    versionDate: "22. Januar 2012"
     weekdays:
       sunday: Sonntag
       monday: Montag
@@ -28,4 +31,5 @@ VS:
       saturday: Samstag
     formats:
       dateTime:
-        full: 'd.m.Y'
+        full: 'l, d.m.Y'
+        default: 'l, d.m.Y'

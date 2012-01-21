@@ -13,7 +13,7 @@ class BasicController extends \TYPO3\FLOW3\MVC\Controller\ActionController {
 
     /**
      * @FLOW3\Inject
-     * @var VS\TimeSheet\Core\Helper
+     * @var \VS\TimeSheet\Core\Helper
      */
     protected $helper;
 

@@ -13,11 +13,23 @@
             <table class="condensed-table">
                 <tbody>
                     <tr>
+                        <td>Zeitraum von:</td>
+                        <td>
+                            <f:format.date format="l, d.m.Y">{filter.dateFrom}</f:format.date>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Zeitraum bis:</td>
+                        <td>
+                            <f:format.date format="l, d.m.Y">{filter.dateTo}</f:format.date>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Kunde:</td>
                         <td>
-                            <f:if condition="{customer}">
+                            <f:if condition="{filter.customer}">
                                 <f:then>
-                                    {customer.name.fullName}
+                                    {filter.customer.name.fullName}
                                 </f:then>
                                 <f:else>
                                     <i>keine Einschränkung</i>
@@ -28,14 +40,14 @@
                     <tr>
                         <td>Projekt:</td>
                         <td>
-                            <f:if condition="{project}">
+                            <f:if condition="{filter.project}">
                                 <f:then>
-                                    <f:if condition="{project.code}">
+                                    <f:if condition="{filter.project.code}">
                                         <f:then>
-                                            <span class="label notice" rel="popover" data-content="Kunde: {project.customer.name.fullName} ({project.customer.code})" data-original-title="{project.name} ({project.code})">{project.code}</span>
+                                            <span class="label notice" rel="popover" data-content="Kunde: {filter.project.customer.name.fullName} ({filter.project.customer.code})" data-original-title="{filter.project.name} ({filter.project.code})">{filter.project.code}</span>
                                         </f:then>
                                         <f:else>
-                                            <span class="label notice" rel="popover" data-content="Kunde: {project.customer.name.fullName} ({project.customer.code})" data-original-title="{project.name}">[Details]</span>
+                                            <span class="label notice" rel="popover" data-content="Kunde: {filter.project.customer.name.fullName} ({filter.project.customer.code})" data-original-title="{filter.project.name}">[Details]</span>
                                         </f:else>
                                     </f:if>
                                 </f:then>
@@ -45,8 +57,25 @@
                             </f:if>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Mitarbeiter:</td>
+                        <td>
+                            <f:if condition="{filter.account}">
+                                <f:then>
+                                    {filter.account.party.name.fullName}
+                                </f:then>
+                                <f:else>
+                                    <i>keine Einschränkung</i>
+                                </f:else>
+                            </f:if>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+            <span class="pull-right">
+                <a href="#" class="btn xsmall" data-controls-modal="modal-filter" data-backdrop="true" data-keyboard="true">Auswahl ändern</a>
+            </span>
+            <f:render partial="Report/Task/FilterDialog" arguments="{_all}"/>
         </div>
         <div class="span10">
             <div id="donutPie" style="width: 550px; height: 400px; margin: 0 auto"></div>
