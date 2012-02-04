@@ -55,8 +55,9 @@ class TaskController extends \VS\TimeSheet\MVC\Controller\BasicController {
     public function newAction(\VS\TimeSheet\Domain\Model\Project $project = NULL) {
         $task = new \VS\TimeSheet\Domain\Model\Task();
 
-        if(!is_null($project))
-            $task->addProject($project);
+        if(!is_null($project)) {
+            $task->setProject($project);
+        }
 
         $this->view->assign('task', $task);
 

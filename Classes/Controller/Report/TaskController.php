@@ -43,7 +43,7 @@ class TaskController extends \VS\TimeSheet\MVC\Controller\BasicController {
     /**
      * @param string $dateFrom
      * @param string $dateTo
-     * @param \TYPO3\FLOW3\Security\Account $account
+     * @param array $account
      */
     public function filterAction($dateFrom = NULL, $dateTo = NULL, $account = NULL) {
         $timezone = new \DateTimeZone('Europe/Berlin');
@@ -56,8 +56,12 @@ class TaskController extends \VS\TimeSheet\MVC\Controller\BasicController {
             $this->filterSession->setDateTo(new\DateTime($dateTo, $timezone));
         }
 
-        // todo: This is required because once the object is in the Session, Doctrine Lazy-Loading will not work :-/
-        if(!is_null($account)) {
+        \TYPO3\FLOW3\var_dump($account);
+
+        if(!is_null($account) && isset($account['__identity']) && $account['__identity'] != '') {
+            $account = $this->accountRepository->findByIdentifier($account['__identity']);
+
+            // todo: This is required because once the object is in the Session, Doctrine Lazy-Loading will not work :-/
             $account->getParty()->getName()->getFullName();
         } else {
             $account = NULL;

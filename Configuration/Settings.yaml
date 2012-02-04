@@ -19,8 +19,8 @@ TYPO3:
 VS:
   TimeSheet:
     brand: TimeSheet
-    version: "1.0.4"
-    versionDate: "22. Januar 2012"
+    version: "1.0.5"
+    versionDate: "05. Februar 2012"
     weekdays:
       sunday: Sonntag
       monday: Montag

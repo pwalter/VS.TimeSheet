@@ -22,6 +22,12 @@ class StandardController extends \VS\TimeSheet\MVC\Controller\BasicJsonControlle
     protected $projectRepository;
 
     /**
+     * @FLOW3\Inject
+     * @var \VS\TimeSheet\Domain\Repository\CustomerRepository
+     */
+    protected $customerRepository;
+
+    /**
      * @param \VS\TimeSheet\Domain\Model\Customer $customer
      * @return void
      */
@@ -78,6 +84,41 @@ class StandardController extends \VS\TimeSheet\MVC\Controller\BasicJsonControlle
      */
     public function taskDetailsAction(\VS\TimeSheet\Domain\Model\Task $task) {
         $this->view->assign('value', $task);
+    }
+
+
+    public function loadSelectOptionsAction() {
+        $customers = array();
+        foreach($this->customerRepository->findAll() as $customer) {
+            $projects = array();
+
+            foreach($customer->getProjects() as $project) {
+                $tasks = array();
+
+                foreach($project->getTasks() as $task) {
+                    $tasks[] = array(
+                        'value' => $this->helper->getIdentifier($task),
+                        'text' => $task->getName()
+                    );
+                }
+
+                $projects[$this->helper->getIdentifier($project)] = array(
+                    'value' => $this->helper->getIdentifier($project),
+                    'text' => $project->getName(),
+                    'tasks' => $tasks
+                );
+            }
+
+            $customers[$this->helper->getIdentifier($customer)] = array(
+                'value' => $this->helper->getIdentifier($project),
+                'text' => $customer->getName()->getFullName(),
+                'projects' => $projects
+            );
+        }
+
+        $this->view->assign('value', array(
+            'customers' => $customers
+        ));
     }
 }
 

@@ -5,6 +5,14 @@ $(document).ready(function(){
                 .attr('readonly', 'readonly')
                 .addClass('disabled');
 
+            $('select', this)
+                .attr('readonly', 'readonly')
+                .addClass('disabled');
+
+            $('textarea', this)
+                .attr('readonly', 'readonly')
+                .addClass('disabled');
+
             $('input[type=submit]', this)
                 .attr('disabled', 'disabled')
                 .attr('value', 'Einen Moment bitte...')

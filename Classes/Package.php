@@ -17,6 +17,8 @@ class Package extends BasePackage {
     public function boot(\TYPO3\FLOW3\Core\Bootstrap $bootstrap) {
         $dispatcher = $bootstrap->getSignalSlotDispatcher();
         $dispatcher->connect('VS\TimeSheet\Controller\StandardController', 'activityCreated', 'VS\TimeSheet\Service\Notification', 'sendNewActivityNotification');
+
+        setlocale(LC_ALL, 'de_DE');
     }
 }
 ?>

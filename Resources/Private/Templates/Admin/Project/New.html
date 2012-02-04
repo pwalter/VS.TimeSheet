@@ -34,11 +34,17 @@
                         </div>
                     </div>
                     <div class="clearfix">
-                            <label for="project">Kunde</label>
-                            <div class="input">
-                                <f:form.select class="span6" property="customer" options="{customers}" name="customer" optionLabelField="name" id="customer" />
-                            </div>
+                        <label for="project">Kunde</label>
+                        <div class="input">
+                            <f:form.select class="span6" property="customer" options="{customers}" name="customer" optionLabelField="name" id="customer" />
                         </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>Farbe</label>
+                        <div class="input">
+                            <f:form.textfield property="color" class="span2 xsmall" id="color" style="background-color: {project.color};" />
+                        </div>
+                    </div>
                     <div class="clearfix">
                         <div class="input">
                             <input type="submit" class="btn primary" value="Speichern">
@@ -46,6 +52,26 @@
                     </div>
                 </fieldset>
             </f:form>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('input#color').ColorPicker({
+                        color: '#0000ff',
+                        onShow: function (colpkr) {
+                            $(colpkr).fadeIn(500);
+                            return false;
+                        },
+                        onHide: function (colpkr) {
+                            $(colpkr).fadeOut(500);
+                            return false;
+                        },
+                        onChange: function (hsb, hex, rgb) {
+                            $('input#color')
+                                    .css('backgroundColor', '#' + hex)
+                                    .attr('value', '#' + hex);
+                        }
+                    });
+                });
+            </script>
         </div>
     </div>
 </f:section>
