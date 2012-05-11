@@ -5,10 +5,11 @@ TYPO3:
         authenticationStrategy: oneToken
         providers:
           DefaultProvider:
-            providerClass: TYPO3\FLOW3\Security\Authentication\Provider\PersistedUsernamePasswordProvider
-            entryPoint:
-              WebRedirect:
-                uri: standard/index
+            provider: TYPO3\FLOW3\Security\Authentication\Provider\PersistedUsernamePasswordProvider
+            providerOptions:
+              entryPoint: 'WebRedirect'
+              entryPointOptions:
+                uri: 'standard/index'
       authorization:
         # An array of access decision voters that should vote when access decisions are made
         accessDecisionVoters:
@@ -20,7 +21,7 @@ VS:
   TimeSheet:
     brand: TimeSheet
     version: "1.0.5"
-    versionDate: "05. Februar 2012"
+    versionDate: "11. Mai 2012"
     weekdays:
       sunday: Sonntag
       monday: Montag

@@ -5,10 +5,6 @@ $(document).ready(function(){
                 .attr('readonly', 'readonly')
                 .addClass('disabled');
 
-            $('select', this)
-                .attr('readonly', 'readonly')
-                .addClass('disabled');
-
             $('textarea', this)
                 .attr('readonly', 'readonly')
                 .addClass('disabled');

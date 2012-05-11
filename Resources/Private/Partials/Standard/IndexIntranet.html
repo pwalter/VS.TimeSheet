@@ -130,8 +130,8 @@
                 });
 
                 // This multidimension object will contain all select options
-                var selectOptions = new Object();
-                $.ajax({
+                var selectOptions = <ts:jsonEncode>{selectOptions}</ts:jsonEncode>;
+                /*$.ajax({
                     type: 'POST',
                     url: '<f:uri.action action="loadSelectOptions" controller="Standard" subpackage="Json" />',
                     success: function(data) {
@@ -140,7 +140,7 @@
                         $("select#project").removeAttr('disabled');
                         $("select#task").removeAttr('disabled');
                     }
-                });
+                });*/
 
                 $("select#customer").change(function(value){
                     var customerKey = $("#customer").val();
@@ -163,7 +163,7 @@
 
                     var customerKey = $("#customer").val();
                     var projectKey = $("select#project").val();
-                    console.log(projectKey);
+
                     var tasks = selectOptions.customers[customerKey].projects[projectKey].tasks;
 
                     var options = '';
@@ -232,7 +232,7 @@
                     <div class="clearfix">
                         <label for="customer">Kunde</label>
                         <div class="input">
-                            <f:form.select class="span6" disabled="disabled" property="task.project.customer" options="{customers}" name="customer" optionLabelField="name.fullName" id="customer" />
+                            <f:form.select class="span6" property="task.project.customer" options="{customers}" name="customer" optionLabelField="name.fullName" id="customer" />
                         </div>
                     </div>
                 </f:then>
@@ -243,13 +243,13 @@
             <div class="clearfix">
                 <label for="project">Projekt</label>
                 <div class="input">
-                    <f:form.select class="span6" disabled="disabled" property="project" options="{projects}" name="project" optionLabelField="name" id="project" />
+                    <f:form.select class="span6" property="project" options="{projects}" name="project" optionLabelField="name" id="project" />
                 </div>
             </div>
             <div class="clearfix">
                 <label for="task">Aufgabe</label>
                 <div class="input">
-                    <f:form.select class="span6"  disabled="disabled" property="task" options="{tasks}" name="task" optionLabelField="name" id="task" />
+                    <f:form.select class="span6" property="task" options="{tasks}" name="task" optionLabelField="name" id="task" />
                     <img src="{f:uri.resource(path: 'icons/information.png')}" class="cursor help" style="visibility: hidden;" id="taskComment" />
 
                 </div>

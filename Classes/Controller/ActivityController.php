@@ -90,6 +90,9 @@ class ActivityController extends \VS\TimeSheet\MVC\Controller\BasicController {
 
             $sumTotalMinutes += $sumMinutes;
 
+            if($sumTotalMinutes == 0)
+                continue;
+
             $days[$i] = array(
                 'date' => $date,
                 'activities' => $activities,

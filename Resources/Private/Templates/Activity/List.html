@@ -75,36 +75,48 @@
             </table>
         </div>
         <div class="span10">
-            <f:for each="{days}" as="day">
-                <f:if condition="{day.activities -> f:count()} != 0">
-                    <h3><ts:format.date>{day.date}</ts:format.date></h3>
-                    <table class="condensed-table zebra-striped rowbutton">
-                        <thead>
-                            <tr>
-                                <th>Dauer (hh:mm)</th>
-                                <th>Projekt</th>
-                                <th>Aufgabe</th>
-                                <th>Kommentar</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <f:for each="{day.activities}" as="activity">
-                                <f:render partial="Activity/ListRow" arguments="{activity: activity}"/>
-                            </f:for>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>&#8721; <ts:format.timespan>{day.sumMinutes}</ts:format.timespan> (SOLL <ts:format.timespan>{day.sollMinutes}</ts:format.timespan>)</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </f:if>
-            </f:for>
+            <f:if condition="{days -> f:count()} == 0 || ">
+                <f:then>
+                    <h3>Keine Tätigkeiten :-(</h3>
+                    <p>
+                        Für den ausgewählten Zeitraum sind noch keine Tätigkeiten erfasst.<br />
+                        Entweder ändern sie den Zeitraum, oder erfassen einfach eine Tätigkeit.
+                    </p>
+                </f:then>
+                <f:else>
+                    <f:for each="{days}" as="day">
+                        <f:if condition="{day.activities -> f:count()} != 0">
+                            <h3><ts:format.date>{day.date}</ts:format.date></h3>
+                            <table class="condensed-table zebra-striped rowbutton">
+                                <thead>
+                                    <tr>
+                                        <th>Dauer (hh:mm)</th>
+                                        <th>Projekt</th>
+                                        <th>Aufgabe</th>
+                                        <th>Kommentar</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <f:for each="{day.activities}" as="activity">
+                                        <f:render partial="Activity/ListRow" arguments="{activity: activity}"/>
+                                    </f:for>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>&#8721; <ts:format.timespan>{day.sumMinutes}</ts:format.timespan> (SOLL <ts:format.timespan>{day.sollMinutes}</ts:format.timespan>)</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </f:if>
+                    </f:for>
+                </f:else>
+            </f:if>
+            
         </div>
     </div>
 </f:section>

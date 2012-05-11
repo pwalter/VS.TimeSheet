@@ -159,6 +159,39 @@ LABEL
             }
             $this->view->assign('items', $items);
         }
+
+        /************************** Select Options *************************/
+        $customers = array();
+        foreach($this->customerRepository->findAll() as $customer) {
+            $projects = array();
+
+            foreach($customer->getProjects() as $project) {
+                $tasks = array();
+
+                foreach($project->getTasks() as $task) {
+                    $tasks[] = array(
+                        'value' => $this->helper->getIdentifier($task),
+                        'text' => $task->getName()
+                    );
+                }
+
+                $projects[$this->helper->getIdentifier($project)] = array(
+                    'value' => $this->helper->getIdentifier($project),
+                    'text' => $project->getName(),
+                    'tasks' => $tasks
+                );
+            }
+
+            $customers[$this->helper->getIdentifier($customer)] = array(
+                'value' => $this->helper->getIdentifier($project),
+                'text' => $customer->getName()->getFullName(),
+                'projects' => $projects
+            );
+        }
+
+        $this->view->assign('selectOptions', array(
+            'customers' => $customers
+        ));
 	}
 
     /**
